@@ -3,10 +3,17 @@ import ReactDOM from 'react-dom';
 import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
+import 'semantic-ui-css/semantic.min.css';
+import { AuthenticationContextProvider } from './contexts/Authentication/AuthenticationContextProvider';
+import { BrowserRouter } from 'react-router-dom';
 
 const app = (
     <React.StrictMode>
-        <App />
+        <BrowserRouter>
+            <AuthenticationContextProvider>
+                <App />
+            </AuthenticationContextProvider>
+        </BrowserRouter>
     </React.StrictMode>
 );
 

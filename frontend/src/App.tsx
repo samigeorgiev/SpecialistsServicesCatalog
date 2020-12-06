@@ -1,7 +1,22 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import { Layout } from './components/Layout';
+import { FacebookAuthenticationHandler } from './components/FacebookAuthenticationHandler';
+import { Home } from './pages';
 
-interface Props {}
+export interface Props {}
 
-export const App: React.FC<Props> = () => {
-    return <h1>App</h1>;
+export const App: FunctionComponent<Props> = () => {
+    return (
+        <Layout>
+            <Switch>
+                <Route path="/">
+                    <Home />
+                </Route>
+                <Route path={process.env.REACT_APP_FACEBOOK_REDIRECT_URI}>
+                    <FacebookAuthenticationHandler />
+                </Route>
+            </Switch>
+        </Layout>
+    );
 };
