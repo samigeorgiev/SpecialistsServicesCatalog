@@ -2,9 +2,9 @@ package com.sscatalog.specialistsservicescatalog.dtos;
 
 public class AuthorizationFacebookResponse {
 
-    private String token;
+    private final String token;
 
-    private int expiresIn;
+    private final int expiresIn;
 
     public AuthorizationFacebookResponse(String token, int expiresIn) {
         this.token = token;
@@ -15,15 +15,7 @@ public class AuthorizationFacebookResponse {
         return token;
     }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
-
     public int getExpiresIn() {
         return expiresIn;
-    }
-
-    public void setExpiresIn(int expiresIn) {
-        this.expiresIn = expiresIn;
     }
 }

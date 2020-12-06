@@ -13,6 +13,9 @@ public class User {
     @Column(name = "facebook_id")
     private long facebookId;
 
+    @OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
+    private Specialist specialist;
+
     public User() {
 
     }
@@ -35,5 +38,13 @@ public class User {
 
     public void setFacebookId(long facebookId) {
         this.facebookId = facebookId;
+    }
+
+    public Specialist getSpecialist() {
+        return specialist;
+    }
+
+    public void setSpecialist(Specialist specialist) {
+        this.specialist = specialist;
     }
 }
