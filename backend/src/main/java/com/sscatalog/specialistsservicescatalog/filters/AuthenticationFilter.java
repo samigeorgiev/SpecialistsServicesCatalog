@@ -1,5 +1,6 @@
 package com.sscatalog.specialistsservicescatalog.filters;
 
+import com.sscatalog.specialistsservicescatalog.entities.User;
 import com.sscatalog.specialistsservicescatalog.repositories.UserRepository;
 import com.sscatalog.specialistsservicescatalog.services.JwtService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @Component
 public class AuthenticationFilter extends OncePerRequestFilter {
@@ -37,15 +39,17 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             try {
                 long userId = jwtService.getSubjectFromToken(token);
                 userRepository.findById(userId)
-                              .ifPresent(user -> {
-                                  Authentication authentication = new UsernamePasswordAuthenticationToken(user, token);
-                                  SecurityContextHolder.getContext()
-                                                       .setAuthentication(authentication);
-                              });
+                              .ifPresent(user -> setAuthentication(user, token));
             } catch (Exception ignored) {
             }
         }
 
         chain.doFilter(request, response);
+    }
+
+    private void setAuthentication(User user, String token) {
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user, token, new ArrayList<>());
+        SecurityContextHolder.getContext()
+                             .setAuthentication(authentication);
     }
 }

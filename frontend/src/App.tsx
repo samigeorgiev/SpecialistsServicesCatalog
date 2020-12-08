@@ -10,7 +10,7 @@ export const App: FunctionComponent<Props> = () => {
     return (
         <Layout>
             <Switch>
-                <Route path="/">
+                <Route path="/" exact>
                     <Home />
                 </Route>
                 <Route path={process.env.REACT_APP_FACEBOOK_REDIRECT_URI}>
