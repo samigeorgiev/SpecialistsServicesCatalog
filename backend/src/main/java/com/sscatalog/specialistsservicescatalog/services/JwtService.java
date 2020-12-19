@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Service
 public class JwtService {
 
-    @Value("${authentication.jwt.secret}")
+    @Value("${jwt.secret}")
     private String secret;
 
     public String generateToken(long subject, int expiresInInSeconds) throws UnsupportedEncodingException {

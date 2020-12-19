@@ -1,0 +1,1 @@
+export { FacebookAuthorizationHandler } from './FacebookAuthorizationHandler';

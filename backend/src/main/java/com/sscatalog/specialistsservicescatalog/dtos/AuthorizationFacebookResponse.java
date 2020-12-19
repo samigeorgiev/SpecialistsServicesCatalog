@@ -1,12 +1,12 @@
 package com.sscatalog.specialistsservicescatalog.dtos;
 
-public class AuthenticationFacebookResponse {
+public class AuthorizationFacebookResponse {
 
     private String token;
 
     private int expiresIn;
 
-    public AuthenticationFacebookResponse(String token, int expiresIn) {
+    public AuthorizationFacebookResponse(String token, int expiresIn) {
         this.token = token;
         this.expiresIn = expiresIn;
     }

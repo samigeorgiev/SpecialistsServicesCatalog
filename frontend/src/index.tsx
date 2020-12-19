@@ -4,15 +4,15 @@ import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import 'semantic-ui-css/semantic.min.css';
-import { AuthenticationContextProvider } from './contexts/Authentication/AuthenticationContextProvider';
+import { UserContextProvider } from './contexts/User/UserContextProvider';
 import { BrowserRouter } from 'react-router-dom';
 
 const app = (
     <React.StrictMode>
         <BrowserRouter>
-            <AuthenticationContextProvider>
+            <UserContextProvider>
                 <App />
-            </AuthenticationContextProvider>
+            </UserContextProvider>
         </BrowserRouter>
     </React.StrictMode>
 );

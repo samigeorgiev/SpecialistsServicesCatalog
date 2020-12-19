@@ -1,25 +1,19 @@
 package com.sscatalog.specialistsservicescatalog.exceptions;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
-public class ApiException extends RuntimeException {
-
-    private HttpStatus status = HttpStatus.BAD_REQUEST;
+public class ApiException extends ResponseStatusException {
 
     public ApiException(String message) {
-        super(message);
+        super(HttpStatus.BAD_REQUEST, message);
     }
 
-    public ApiException(HttpStatus status, String message) {
-        super(message);
-        this.status = status;
+    public ApiException(HttpStatus httpStatus, String message) {
+        super(httpStatus, message);
     }
 
-    public HttpStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(HttpStatus status) {
-        this.status = status;
+    public ApiException(HttpStatus httpStatus, String message, Exception exception) {
+        super(httpStatus, message, exception);
     }
 }

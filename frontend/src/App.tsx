@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Layout } from './components/Layout';
-import { FacebookAuthenticationHandler } from './components/FacebookAuthenticationHandler';
+import { FacebookAuthorizationHandler } from './components/FacebookAuthorizationHandler';
 import { Home } from './pages';
 
 export interface Props {}
@@ -14,7 +14,7 @@ export const App: FunctionComponent<Props> = () => {
                     <Home />
                 </Route>
                 <Route path={process.env.REACT_APP_FACEBOOK_REDIRECT_URI}>
-                    <FacebookAuthenticationHandler />
+                    <FacebookAuthorizationHandler />
                 </Route>
             </Switch>
         </Layout>

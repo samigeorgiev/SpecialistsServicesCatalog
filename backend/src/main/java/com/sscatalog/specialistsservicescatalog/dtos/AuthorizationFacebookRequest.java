@@ -1,23 +1,20 @@
 package com.sscatalog.specialistsservicescatalog.dtos;
 
-public class AuthenticationFacebookRequest {
+import javax.validation.constraints.NotNull;
+
+public class AuthorizationFacebookRequest {
+
+    @NotNull
     private String code;
 
+    @NotNull
     private String redirectUri;
 
     public String getCode() {
         return code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getRedirectUri() {
         return redirectUri;
-    }
-
-    public void setRedirectUri(String redirectUri) {
-        this.redirectUri = redirectUri;
     }
 }
