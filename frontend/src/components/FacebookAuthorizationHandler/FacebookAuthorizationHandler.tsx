@@ -1,7 +1,8 @@
-import React, {FunctionComponent, useEffect, useState} from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
 import { Loader, Message } from 'semantic-ui-react';
 import { useFacebookOAuth2 } from '../../hooks/OAuth2/useFacebookOAuth2';
+import { facebookParametersKey } from '../../hooks/OAuth2/FacebookParametersKey';
 
 export interface Props {}
 
@@ -15,12 +16,16 @@ export const FacebookAuthorizationHandler: FunctionComponent<Props> = () => {
         const params = new URLSearchParams(location.search);
         const localState = localStorage.getItem(process.env.REACT_APP_FACEBOOK_STATE_TOKEN_LOCALSTORAGE_KEY!);
         localStorage.removeItem(process.env.REACT_APP_FACEBOOK_STATE_TOKEN_LOCALSTORAGE_KEY!);
-        if (localState == null || localState !== params.get('state') || !params.has('code')) {
+        if (
+            localState == null ||
+            localState !== params.get(facebookParametersKey.STATE) ||
+            !params.has(facebookParametersKey.CODE)
+        ) {
             setError('Authentication failed.');
             return;
         }
 
-        doAuthorization(params.get('code')!);
+        doAuthorization(params.get(facebookParametersKey.CODE)!);
     }, [location, doAuthorization]);
 
     if (authorization.finished) {
