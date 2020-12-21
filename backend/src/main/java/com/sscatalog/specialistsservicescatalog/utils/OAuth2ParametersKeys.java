@@ -1,6 +1,6 @@
 package com.sscatalog.specialistsservicescatalog.utils;
 
-public class FacebookParametersKeys {
+public class OAuth2ParametersKeys {
 
     public static final String CLIENT_ID = "client_id";
 

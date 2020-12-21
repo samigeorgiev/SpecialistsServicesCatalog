@@ -1,14 +1,14 @@
 package com.sscatalog.specialistsservicescatalog.services;
 
+import com.sscatalog.specialistsservicescatalog.config.properties.OAuth2FacebookProperties;
 import com.sscatalog.specialistsservicescatalog.dtos.AuthorizationFacebookResponse;
 import com.sscatalog.specialistsservicescatalog.dtos.FacebookAccessTokenResponse;
 import com.sscatalog.specialistsservicescatalog.dtos.FacebookUserInfoResponse;
 import com.sscatalog.specialistsservicescatalog.entities.User;
 import com.sscatalog.specialistsservicescatalog.exceptions.ApiException;
 import com.sscatalog.specialistsservicescatalog.repositories.UserRepository;
-import com.sscatalog.specialistsservicescatalog.utils.FacebookParametersKeys;
+import com.sscatalog.specialistsservicescatalog.utils.OAuth2ParametersKeys;
 import com.sscatalog.specialistsservicescatalog.utils.HttpUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -25,21 +25,14 @@ public class AuthorizationService {
 
     private final UserRepository userRepository;
 
-    @Value("${oauth2.facebook.access-token-url}")
-    private String facebookAccessTokenUrl;
+    private final OAuth2FacebookProperties oAuth2FacebookProperties;
 
-    @Value("${oauth2.facebook.user-info-url}")
-    private String facebookUserInfoUrl;
-
-    @Value("${oauth2.facebook.client-id}")
-    private String facebookClientId;
-
-    @Value("${oauth2.facebook.client-secret}")
-    private String facebookClientSecret;
-
-    public AuthorizationService(JwtService jwtService, UserRepository userRepository) {
+    public AuthorizationService(JwtService jwtService,
+                                UserRepository userRepository,
+                                OAuth2FacebookProperties oAuth2FacebookProperties) {
         this.jwtService = jwtService;
         this.userRepository = userRepository;
+        this.oAuth2FacebookProperties = oAuth2FacebookProperties;
     }
 
     public AuthorizationFacebookResponse authorizeWithFacebook(String code, String redirectUri) {
@@ -69,18 +62,18 @@ public class AuthorizationService {
 
     private String buildFacebookAccessTokenUrl(String code, String redirectUri) {
         Map<String, String> queryParams = new HashMap<>() {{
-            put(FacebookParametersKeys.CLIENT_ID, facebookClientId);
-            put(FacebookParametersKeys.CLIENT_SECRET, facebookClientSecret);
-            put(FacebookParametersKeys.CODE, code);
-            put(FacebookParametersKeys.REDIRECT_URI, redirectUri);
+            put(OAuth2ParametersKeys.CLIENT_ID, oAuth2FacebookProperties.getClientId());
+            put(OAuth2ParametersKeys.CLIENT_SECRET, oAuth2FacebookProperties.getClientSecret());
+            put(OAuth2ParametersKeys.CODE, code);
+            put(OAuth2ParametersKeys.REDIRECT_URI, redirectUri);
         }};
-        return facebookAccessTokenUrl + HttpUtils.buildQueryString(queryParams);
+        return oAuth2FacebookProperties.getAccessTokenUrl() + HttpUtils.buildQueryString(queryParams);
     }
 
     private String buildFacebookUserInfoUrl(String accessToken) {
         Map<String, String> queryParams = new HashMap<>() {{
-            put(FacebookParametersKeys.ACCESS_TOKEN, accessToken);
+            put(OAuth2ParametersKeys.ACCESS_TOKEN, accessToken);
         }};
-        return facebookUserInfoUrl + HttpUtils.buildQueryString(queryParams);
+        return oAuth2FacebookProperties.getUserInfoUrl() + HttpUtils.buildQueryString(queryParams);
     }
 }
