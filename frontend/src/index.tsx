@@ -3,10 +3,17 @@ import ReactDOM from 'react-dom';
 import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
+import 'semantic-ui-css/semantic.min.css';
+import { UserContextProvider } from './contexts/User/UserContextProvider';
+import { BrowserRouter } from 'react-router-dom';
 
 const app = (
     <React.StrictMode>
-        <App />
+        <BrowserRouter>
+            <UserContextProvider>
+                <App />
+            </UserContextProvider>
+        </BrowserRouter>
     </React.StrictMode>
 );
 
