@@ -5,6 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -13,7 +14,7 @@ public class User {
     @Column(name = "facebook_id")
     private long facebookId;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Specialist specialist;
 
     public User() {

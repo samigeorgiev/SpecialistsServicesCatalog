@@ -8,7 +8,7 @@ export interface Props {
 }
 
 export const AuthenticationModal: FunctionComponent<Props> = props => {
-    const { redirectToFacebookLogIn } = useFacebookOAuth2();
+    const { redirectToFacebookLogin } = useFacebookOAuth2();
 
     return (
         <Modal open={props.open} onClose={props.onClose} size="tiny" centered={false}>
@@ -16,7 +16,7 @@ export const AuthenticationModal: FunctionComponent<Props> = props => {
             <Modal.Content>
                 <Container textAlign="center">
                     <Button
-                        onClick={redirectToFacebookLogIn}
+                        onClick={redirectToFacebookLogin}
                         content="Login with Facebook"
                         icon="facebook"
                         color="facebook"

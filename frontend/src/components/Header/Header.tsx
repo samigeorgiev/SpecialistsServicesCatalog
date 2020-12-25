@@ -14,7 +14,7 @@ export const Header: FunctionComponent<Props> = () => {
 
     return (
         <header>
-            <Toolbar onLogIn={openAuthenticationModalHandler} isUserLoggedIn={user !== null} />
+            <Toolbar onLogin={openAuthenticationModalHandler} isUserLoggedIn={user !== null} />
             <AuthenticationModal open={authenticationModalOpen} onClose={closeAuthenticationModalHandler} />
         </header>
     );

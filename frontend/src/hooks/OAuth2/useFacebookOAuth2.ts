@@ -26,7 +26,7 @@ export const useFacebookOAuth2 = (): FacebookOAuth2 => {
         }
     }, [authorizationState.error]);
 
-    const redirectToFacebookLogIn = (): void => {
+    const redirectToFacebookLogin = (): void => {
         window.location.href = buildAccessTokenUrl();
     };
 
@@ -42,7 +42,7 @@ export const useFacebookOAuth2 = (): FacebookOAuth2 => {
     );
 
     return {
-        redirectToFacebookLogIn,
+        redirectToFacebookLogin,
         authorization: {
             doAuthorization,
             error: authorizationError,

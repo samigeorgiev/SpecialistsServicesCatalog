@@ -1,5 +1,5 @@
 export interface FacebookOAuth2 {
-    redirectToFacebookLogIn: () => void;
+    redirectToFacebookLogin: () => void;
     authorization: Authorization;
 }
 

@@ -4,7 +4,7 @@ import styles from './Toolbar.module.css';
 import { UserActionsDropdown } from '../../UserActionsDropdown';
 
 export interface Props {
-    onLogIn: () => void;
+    onLogin: () => void;
     isUserLoggedIn: boolean;
 }
 
@@ -18,7 +18,7 @@ export const Toolbar: FunctionComponent<Props> = props => {
                     <UserActionsDropdown />
                 </Menu.Item>
             ) : (
-                <Menu.Item onClick={props.onLogIn} position="right">
+                <Menu.Item onClick={props.onLogin} position="right">
                     Log in
                 </Menu.Item>
             )}
