@@ -1,10 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { Dropdown } from 'semantic-ui-react';
-import {useBecomeSpecialist} from "../../hooks/UserActions/useBecomeSpecialist";
+import { useBecomeSpecialist } from '../../hooks/UserActions/useBecomeSpecialist';
 
-export interface Props {}
-
-export const UserActionsDropdown: FunctionComponent<Props> = () => {
+export const UserActionsDropdown: FunctionComponent = () => {
     const becomeSpecialist = useBecomeSpecialist();
 
     return (

@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Button, Container, Modal } from 'semantic-ui-react';
 import { useFacebookOAuth2 } from '../../hooks/OAuth2/useFacebookOAuth2';
 
-export interface Props {
+interface Props {
     open: boolean;
     onClose: () => void;
 }

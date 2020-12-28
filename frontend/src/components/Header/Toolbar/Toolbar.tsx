@@ -3,7 +3,7 @@ import { Menu } from 'semantic-ui-react';
 import styles from './Toolbar.module.css';
 import { UserActionsDropdown } from '../../UserActionsDropdown';
 
-export interface Props {
+interface Props {
     onLogin: () => void;
     isUserLoggedIn: boolean;
 }

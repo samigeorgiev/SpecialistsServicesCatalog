@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Message } from 'semantic-ui-react';
 import styles from './ErrorMessage.module.css';
 
-export interface Props {
+interface Props {
     header: string;
     content: string;
 }

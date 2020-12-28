@@ -3,9 +3,7 @@ import { Toolbar } from './Toolbar';
 import { AuthenticationModal } from '../AuthenticationModal';
 import { UserContext } from '../../contexts/User/UserContext';
 
-export interface Props {}
-
-export const Header: FunctionComponent<Props> = () => {
+export const Header: FunctionComponent = () => {
     const { user } = useContext(UserContext);
 
     const [authenticationModalOpen, setAuthenticationModalOpen] = useState(false);
