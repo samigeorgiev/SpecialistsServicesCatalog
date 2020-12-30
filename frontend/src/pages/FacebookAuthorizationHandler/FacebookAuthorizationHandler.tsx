@@ -4,9 +4,7 @@ import { Loader, Message } from 'semantic-ui-react';
 import { useFacebookOAuth2 } from '../../hooks/OAuth2/useFacebookOAuth2';
 import { facebookParametersKey } from '../../hooks/OAuth2/FacebookParametersKey';
 
-export interface Props {}
-
-export const FacebookAuthorizationHandler: FunctionComponent<Props> = () => {
+export const FacebookAuthorizationHandler: FunctionComponent = () => {
     const [error, setError] = useState<string | undefined>();
     const location = useLocation();
     const { authorization } = useFacebookOAuth2();

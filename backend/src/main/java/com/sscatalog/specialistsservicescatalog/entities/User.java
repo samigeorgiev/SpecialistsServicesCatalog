@@ -5,6 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -12,6 +13,9 @@ public class User {
 
     @Column(name = "facebook_id")
     private long facebookId;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Specialist specialist;
 
     public User() {
 
@@ -35,5 +39,13 @@ public class User {
 
     public void setFacebookId(long facebookId) {
         this.facebookId = facebookId;
+    }
+
+    public Specialist getSpecialist() {
+        return specialist;
+    }
+
+    public void setSpecialist(Specialist specialist) {
+        this.specialist = specialist;
     }
 }
