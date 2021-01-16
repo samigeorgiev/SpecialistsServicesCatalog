@@ -1,8 +1,9 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
-import { Loader, Message } from 'semantic-ui-react';
+import { Loader } from 'semantic-ui-react';
 import { useFacebookOAuth2 } from '../../hooks/OAuth2/useFacebookOAuth2';
 import { facebookParametersKey } from '../../hooks/OAuth2/FacebookParametersKey';
+import { ErrorMessage } from '../../components/Common/ErrorMessage';
 
 export const FacebookAuthorizationHandler: FunctionComponent = () => {
     const [error, setError] = useState<string | undefined>();
@@ -32,7 +33,7 @@ export const FacebookAuthorizationHandler: FunctionComponent = () => {
 
     const errorMessage = error || authorization.error;
     if (errorMessage !== undefined) {
-        return <Message header="Authentication error" content={errorMessage} negative />;
+        return <ErrorMessage header="Authentication error" content={errorMessage} />;
     }
 
     return <Loader />;

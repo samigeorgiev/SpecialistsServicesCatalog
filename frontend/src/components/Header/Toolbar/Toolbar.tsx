@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Menu } from 'semantic-ui-react';
 import styles from './Toolbar.module.css';
-import { UserActionsDropdown } from '../../UserActionsDropdown';
+import { UserActionsDropdown } from './UserActionsDropdown';
 
 interface Props {
     onLogin: () => void;

@@ -1,14 +1,16 @@
 import React, { FunctionComponent } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Dropdown } from 'semantic-ui-react';
-import { useBecomeSpecialist } from '../../hooks/UserActions/useBecomeSpecialist';
 
 export const UserActionsDropdown: FunctionComponent = () => {
-    const becomeSpecialist = useBecomeSpecialist();
+    const history = useHistory();
+
+    const onUserItemClick = () => history.push('/user');
 
     return (
         <Dropdown inline icon="user" direction="left">
             <Dropdown.Menu>
-                <Dropdown.Item onClick={becomeSpecialist.doBecomeSpecialist}>Become specialist</Dropdown.Item>
+                <Dropdown.Item onClick={onUserItemClick}>User</Dropdown.Item>
                 <Dropdown.Item>Log out</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>

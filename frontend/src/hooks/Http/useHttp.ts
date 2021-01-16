@@ -1,12 +1,16 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useContext, useMemo, useState } from "react";
 import { ErrorResponse } from './ErrorResponse';
 import { HttpState } from './HttpState';
 import { HttpOptions } from './HttpOptions';
+import { UserContext } from "../../contexts/User/UserContext";
+import { User } from "../../contexts/User/User";
 
 export const useHttp = <TResponseBody>(): {
     state: HttpState<TResponseBody>;
-    sendRequest: (url: string, httpOptions: HttpOptions) => void;
+    sendRequest: (url: string, httpOptions?: HttpOptions) => void;
 } => {
+    const { user } = useContext(UserContext);
+
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<ErrorResponse | null>(null);
     const [response, setResponse] = useState<(TResponseBody & { status: number }) | null>(null);
@@ -19,7 +23,7 @@ export const useHttp = <TResponseBody>(): {
             setResponse(null);
 
             try {
-                const response = await fetch(url, buildRequestInitOptions(httpOptions));
+                const response = await fetch(url, buildRequestInitOptions(user, httpOptions));
                 const body = await response.json();
                 setLoading(false);
 
@@ -37,7 +41,7 @@ export const useHttp = <TResponseBody>(): {
                 setError({ message: error.message });
             }
         },
-        [defaultOptions]
+        [defaultOptions, user]
     );
 
     return {
@@ -46,13 +50,16 @@ export const useHttp = <TResponseBody>(): {
     };
 };
 
-const buildRequestInitOptions = (httpOptions: HttpOptions): RequestInit => {
+const buildRequestInitOptions = (user: User | null, httpOptions: HttpOptions): RequestInit => {
+    const headers: Record<string, string> = { ...httpOptions.headers };
+    headers['Content-Type'] = 'application/json';
+    if (user !== null) {
+        headers['Authorization'] = user.token;
+    }
+    console.log(headers);
     return {
         method: httpOptions.method,
-        headers: {
-            'Content-Type': 'application/json',
-            ...httpOptions.headers
-        },
+        headers,
         body: JSON.stringify(httpOptions.body)
     };
 };
