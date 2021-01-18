@@ -1,8 +1,11 @@
 package com.sscatalog.specialistsservicescatalog.services;
 
+import com.sscatalog.specialistsservicescatalog.dtos.OfferedServiceDto;
 import com.sscatalog.specialistsservicescatalog.dtos.ServiceDto;
 import com.sscatalog.specialistsservicescatalog.entities.Service;
+import com.sscatalog.specialistsservicescatalog.exceptions.ApiException;
 import com.sscatalog.specialistsservicescatalog.repositories.ServiceRepository;
+import com.sscatalog.specialistsservicescatalog.utils.DtoConverter;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,14 +20,16 @@ public class ServicesService {
     public List<ServiceDto> getServices() {
         return serviceRepository.findAll()
                                 .stream()
-                                .map(this::buildServiceDto)
+                                .map(DtoConverter::toServiceDto)
                                 .collect(Collectors.toList());
     }
 
-    private ServiceDto buildServiceDto(Service service) {
-        return new ServiceDto(service.getId(),
-                              service.getName(),
-                              service.getTag()
-                                     .getName());
+    public List<OfferedServiceDto> getOfferedServices(long serviceId) {
+        Service service = serviceRepository.findById(serviceId)
+                                           .orElseThrow(() -> new ApiException("Invalid service id"));
+        return service.getOfferedServices()
+                      .stream()
+                      .map(DtoConverter::toOfferedServiceDto)
+                      .collect(Collectors.toList());
     }
 }

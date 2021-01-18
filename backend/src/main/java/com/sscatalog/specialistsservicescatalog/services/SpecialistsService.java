@@ -3,14 +3,12 @@ package com.sscatalog.specialistsservicescatalog.services;
 import com.sscatalog.specialistsservicescatalog.dtos.AddOfferedServiceRequest;
 import com.sscatalog.specialistsservicescatalog.dtos.ServiceDto;
 import com.sscatalog.specialistsservicescatalog.dtos.OfferedServiceDto;
-import com.sscatalog.specialistsservicescatalog.entities.OfferedService;
-import com.sscatalog.specialistsservicescatalog.entities.Service;
-import com.sscatalog.specialistsservicescatalog.entities.Specialist;
-import com.sscatalog.specialistsservicescatalog.entities.User;
+import com.sscatalog.specialistsservicescatalog.entities.*;
 import com.sscatalog.specialistsservicescatalog.exceptions.ApiException;
 import com.sscatalog.specialistsservicescatalog.repositories.OfferedServiceRepository;
 import com.sscatalog.specialistsservicescatalog.repositories.ServiceRepository;
 import com.sscatalog.specialistsservicescatalog.repositories.SpecialistRepository;
+import com.sscatalog.specialistsservicescatalog.utils.DtoConverter;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,17 +41,8 @@ public class SpecialistsService {
         List<OfferedService> offeredServices = offeredServiceRepository.findAllBySpecialistIdIncludingService(
                 specialistId);
         return offeredServices.stream()
-                              .map(this::buildOfferedServiceDto)
+                              .map(DtoConverter::toOfferedServiceDto)
                               .collect(Collectors.toList());
-    }
-
-    private OfferedServiceDto buildOfferedServiceDto(OfferedService offeredService) {
-        com.sscatalog.specialistsservicescatalog.entities.Service service = offeredService.getService();
-        ServiceDto serviceDto = new ServiceDto(service.getId(),
-                                               service.getName(),
-                                               service.getTag()
-                                                      .getName());
-        return new OfferedServiceDto(serviceDto, offeredService.getPrice(), offeredService.isPrepaid());
     }
 
     public void addService(Specialist specialist, AddOfferedServiceRequest request) {

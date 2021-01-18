@@ -4,6 +4,7 @@ import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import 'semantic-ui-css/semantic.min.css';
+import 'react-simple-tree-menu/dist/main.css';
 import { UserContextProvider } from './contexts/User/UserContextProvider';
 import { BrowserRouter } from 'react-router-dom';
 
