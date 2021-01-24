@@ -1,9 +1,11 @@
-import { useCallback, useContext, useMemo, useState } from "react";
+import { useCallback, useContext, useMemo, useState } from 'react';
 import { ErrorResponse } from './ErrorResponse';
 import { HttpState } from './HttpState';
 import { HttpOptions } from './HttpOptions';
-import { UserContext } from "../../contexts/User/UserContext";
-import { User } from "../../contexts/User/User";
+import { UserContext } from '../../contexts/User/UserContext';
+import { User } from '../../contexts/User/User';
+
+const HTTP_STATUS_NO_CONTENT = 204;
 
 export const useHttp = <TResponseBody>(): {
     state: HttpState<TResponseBody>;
@@ -24,11 +26,14 @@ export const useHttp = <TResponseBody>(): {
 
             try {
                 const response = await fetch(url, buildRequestInitOptions(user, httpOptions));
-                const body = await response.json();
+                const body = response.status !== HTTP_STATUS_NO_CONTENT ? await response.json() : {};
                 setLoading(false);
 
-                if (response.ok) {
-                    setResponse(body);
+                if (isResponseSuccessful(response)) {
+                    setResponse({
+                        ...body,
+                        status: response.status
+                    });
                     return;
                 }
 
@@ -56,10 +61,13 @@ const buildRequestInitOptions = (user: User | null, httpOptions: HttpOptions): R
     if (user !== null) {
         headers['Authorization'] = user.token;
     }
-    console.log(headers);
     return {
         method: httpOptions.method,
         headers,
         body: JSON.stringify(httpOptions.body)
     };
+};
+
+const isResponseSuccessful = (response: Response) => {
+    return response.ok || response.status === HTTP_STATUS_NO_CONTENT;
 };
