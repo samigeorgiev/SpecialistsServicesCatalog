@@ -19,10 +19,11 @@ export const Browse: FunctionComponent = () => {
                 const tagsDto = getTagsResponse.tags;
                 const services = getServicesResponse.services.reduce<{ [tagId: number]: MenuNode[] }>(
                     (accumulator, currentValue) => {
-                        accumulator[currentValue.tagId] = [
-                            ...(accumulator[currentValue.tagId] || []),
-                            convertServiceToTreeNode(currentValue)
-                        ];
+                        if (accumulator[currentValue.tagId] === undefined) {
+                            accumulator[currentValue.tagId] = [];
+                        }
+
+                        accumulator[currentValue.tagId].push(convertServiceToTreeNode(currentValue));
                         return accumulator;
                     },
                     {}

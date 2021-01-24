@@ -3,7 +3,10 @@ package com.sscatalog.specialistsservicescatalog.utils;
 import com.sscatalog.specialistsservicescatalog.dtos.OfferedServiceDto;
 import com.sscatalog.specialistsservicescatalog.dtos.ServiceDto;
 import com.sscatalog.specialistsservicescatalog.dtos.SpecialistDto;
+import com.sscatalog.specialistsservicescatalog.dtos.TagDto;
 import com.sscatalog.specialistsservicescatalog.entities.*;
+
+import java.util.ArrayList;
 
 public class DtoConverter {
 
@@ -24,5 +27,11 @@ public class DtoConverter {
     public static SpecialistDto toSpecialistDto(Specialist entity) {
         User user = entity.getUser();
         return new SpecialistDto(entity.getId(), user.getName());
+    }
+
+    public static TagDto toTagDto(Tag entity) {
+        Tag parentTag = entity.getParentTag();
+        Long parentTagId = parentTag != null ? parentTag.getId() : null;
+        return new TagDto(entity.getId(), entity.getName(), parentTagId, new ArrayList<>());
     }
 }

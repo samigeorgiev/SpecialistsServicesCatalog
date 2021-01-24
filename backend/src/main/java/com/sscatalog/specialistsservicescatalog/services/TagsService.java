@@ -3,6 +3,7 @@ package com.sscatalog.specialistsservicescatalog.services;
 import com.sscatalog.specialistsservicescatalog.dtos.TagDto;
 import com.sscatalog.specialistsservicescatalog.entities.Tag;
 import com.sscatalog.specialistsservicescatalog.repositories.TagRepository;
+import com.sscatalog.specialistsservicescatalog.utils.DtoConverter;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class TagsService {
     public List<TagDto> getTags() {
         Map<Long, TagDto> allTags = tagRepository.findAll()
                                                  .stream()
-                                                 .collect(Collectors.toMap(Tag::getId, this::buildTagDto));
+                                                 .collect(Collectors.toMap(Tag::getId, DtoConverter::toTagDto));
         allTags.values()
                .stream()
                .filter(tag -> !this.rootLevelTag(tag))
@@ -37,12 +38,6 @@ public class TagsService {
                       .stream()
                       .filter(this::rootLevelTag)
                       .collect(Collectors.toList());
-    }
-
-    private TagDto buildTagDto(Tag tag) {
-        Tag parentTag = tag.getParentTag();
-        Long parentTagId = parentTag != null ? parentTag.getId() : null;
-        return new TagDto(tag.getId(), tag.getName(), parentTagId, new ArrayList<>());
     }
 
     private boolean rootLevelTag(TagDto tag) {

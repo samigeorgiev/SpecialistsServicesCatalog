@@ -26,7 +26,7 @@ export const SpecialistsList: FunctionComponent<Props> = props => {
                     <List.Header>{offeredService.specialist.name}</List.Header>
                     <List.Content>
                         <p>Price: {offeredService.price}</p>
-                        <p>Is prepaid: {offeredService.prepaid ? 'true' : 'false'}</p>
+                        <p>Is prepaid: {offeredService.prepaid ? 'yes' : 'no'}</p>
                         {user !== null ? <Button color="green">Request</Button> : null}
                     </List.Content>
                 </List.Item>
