@@ -12,12 +12,13 @@ export const useFacebookOAuth2 = (): FacebookOAuth2 => {
     const { state: authorizationState, sendRequest } = useHttp<AuthorizationResponse>();
     const login = useLogin();
 
+    const authorizationResponse = authorizationState.response;
     useEffect(() => {
-        if (authorizationState.response) {
-            login.doLogin(authorizationState.response.token, authorizationState.response.expiresIn);
+        if (authorizationResponse) {
+            login.doLogin(authorizationResponse.token, authorizationResponse.expiresIn);
             setAuthorizationFinished(true);
         }
-    }, [authorizationState.response, login, setUser]);
+    }, [authorizationResponse, login, setUser]);
 
     useEffect(() => {
         if (authorizationState.error) {
