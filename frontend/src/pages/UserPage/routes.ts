@@ -1,6 +1,6 @@
-import { ComponentType } from "react";
-import { BecomeSpecialist } from "../../components/UserPage/BecomeSpecialist";
-import { OfferedServices } from "../../components/UserPage/OfferedServices";
+import { ComponentType } from 'react';
+import { BecomeSpecialist } from '../../components/UserPage/BecomeSpecialist';
+import { OfferedServices } from '../../components/UserPage/OfferedServices';
 
 export enum RoutesGroupType {
     USER,

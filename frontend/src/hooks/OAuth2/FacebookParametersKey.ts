@@ -3,4 +3,4 @@ export const facebookParametersKey = {
     REDIRECT_URI: 'redirect_uri',
     STATE: 'state',
     CODE: 'code'
-}
+};

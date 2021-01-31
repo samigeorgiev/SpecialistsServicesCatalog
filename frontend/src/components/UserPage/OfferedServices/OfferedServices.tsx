@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useCallback, useContext, useEffect, useState} from 'react';
+import React, { FunctionComponent, useCallback, useContext, useEffect, useState } from 'react';
 import { Button, Form, List } from 'semantic-ui-react';
 import { UserContext } from '../../../contexts/User/UserContext';
 
@@ -18,8 +18,8 @@ export const OfferedServices: FunctionComponent = () => {
                 Authorization: user.token
             }
         })
-                .then(res => res.json())
-                .then((services: OfferedService[]) => setOfferedServices(services));
+            .then(res => res.json())
+            .then((services: OfferedService[]) => setOfferedServices(services));
     }, [user]);
 
     useEffect(() => {

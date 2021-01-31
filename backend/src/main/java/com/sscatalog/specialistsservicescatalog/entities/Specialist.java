@@ -5,9 +5,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-@Table(name = "specialists", indexes = {
-        @Index(columnList = "user_id", unique = true)
-})
+@Table(name = "specialists", indexes = { @Index(columnList = "user_id", unique = true) })
 public class Specialist {
 
     @Id

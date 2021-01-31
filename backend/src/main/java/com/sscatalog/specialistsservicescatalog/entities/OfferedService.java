@@ -4,10 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "offered_services", indexes = {
-        @Index(columnList = "specialist_id"),
-        @Index(columnList = "service_id")
-})
+@Table(name = "offered_services", indexes = { @Index(columnList = "specialist_id"), @Index(columnList = "service_id") })
 public class OfferedService {
 
     @Id

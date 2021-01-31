@@ -4,7 +4,7 @@ import { FacebookAuthorizationHandler } from './FacebookAuthorizationHandler';
 import { Home } from './Home';
 import { UserPage } from './UserPage';
 import { UserContext } from '../contexts/User/UserContext';
-import {Browse} from "./Browse";
+import { Browse } from './Browse';
 
 export const Routes: FunctionComponent = () => {
     const { user } = useContext(UserContext);
