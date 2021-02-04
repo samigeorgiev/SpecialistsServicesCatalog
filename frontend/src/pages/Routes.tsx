@@ -4,6 +4,7 @@ import { FacebookAuthorizationHandler } from './FacebookAuthorizationHandler';
 import { Home } from './Home';
 import { UserPage } from './UserPage';
 import { UserContext } from '../contexts/User/UserContext';
+import {Browse} from "./Browse";
 
 export const Routes: FunctionComponent = () => {
     const { user } = useContext(UserContext);
@@ -15,6 +16,9 @@ export const Routes: FunctionComponent = () => {
             </Route>
             <Route path={process.env.REACT_APP_FACEBOOK_REDIRECT_URI} exact>
                 <FacebookAuthorizationHandler />
+            </Route>
+            <Route path="/browse">
+                <Browse />
             </Route>
             {user !== null ? (
                 <Route path="/user">

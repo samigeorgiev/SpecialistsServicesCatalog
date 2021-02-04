@@ -1,6 +1,7 @@
 package com.sscatalog.specialistsservicescatalog.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "services")
@@ -17,6 +18,9 @@ public class Service {
     @ManyToOne
     @JoinColumn(name = "tag_id")
     private Tag tag;
+
+    @OneToMany(mappedBy = "service")
+    private List<OfferedService> offeredServices;
 
     public Service() {
     }
@@ -47,5 +51,13 @@ public class Service {
 
     public void setTag(Tag tag) {
         this.tag = tag;
+    }
+
+    public List<OfferedService> getOfferedServices() {
+        return offeredServices;
+    }
+
+    public void setOfferedServices(List<OfferedService> offeredServices) {
+        this.offeredServices = offeredServices;
     }
 }

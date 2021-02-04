@@ -1,9 +1,12 @@
 package com.sscatalog.specialistsservicescatalog.controllers;
 
+import com.sscatalog.specialistsservicescatalog.dtos.GetOfferedServicesResponse;
 import com.sscatalog.specialistsservicescatalog.dtos.GetServicesResponse;
+import com.sscatalog.specialistsservicescatalog.dtos.OfferedServiceDto;
 import com.sscatalog.specialistsservicescatalog.dtos.ServiceDto;
 import com.sscatalog.specialistsservicescatalog.services.ServicesService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,5 +24,11 @@ public class ServicesController {
     public GetServicesResponse getServices() {
         List<ServiceDto> services = servicesService.getServices();
         return new GetServicesResponse(services);
+    }
+
+    @GetMapping("/{serviceId}/offered-services")
+    public GetOfferedServicesResponse getOfferedServices(@PathVariable long serviceId) {
+        List<OfferedServiceDto> offeredServices = servicesService.getOfferedServices(serviceId);
+        return new GetOfferedServicesResponse(offeredServices);
     }
 }

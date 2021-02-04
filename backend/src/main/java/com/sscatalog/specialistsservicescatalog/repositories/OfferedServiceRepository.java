@@ -8,11 +8,10 @@ import java.util.List;
 
 public interface OfferedServiceRepository extends JpaRepository<OfferedService, Long> {
 
-    @Query(
-            "select offeredService " +
-            "from OfferedService offeredService " +
-            "join fetch offeredService.service " +
-            "where offeredService.specialist.id = :specialistId"
-    )
+    @Query("""
+           select offeredService
+           from OfferedService offeredService
+           join fetch offeredService.service
+           where offeredService.specialist.id = :specialistId""")
     List<OfferedService> findAllBySpecialistIdIncludingService(long specialistId);
 }
