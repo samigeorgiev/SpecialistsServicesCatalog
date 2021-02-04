@@ -2,23 +2,23 @@ import { useHttp } from '../Http/useHttp';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../contexts/User/UserContext';
 import { FacebookOAuth2 } from './FacebookOAuth2';
-import { facebookParametersKey } from "./FacebookParametersKey";
+import { facebookParametersKey } from './FacebookParametersKey';
+import { useLogin } from '../UserActions/Login/useLogin';
 
 export const useFacebookOAuth2 = (): FacebookOAuth2 => {
     const { setUser } = useContext(UserContext);
     const [authorizationError, setAuthorizationError] = useState<string | undefined>();
     const [authorizationFinished, setAuthorizationFinished] = useState(false);
     const { state: authorizationState, sendRequest } = useHttp<AuthorizationResponse>();
+    const login = useLogin();
 
+    const authorizationResponse = authorizationState.response;
     useEffect(() => {
-        if (authorizationState.response) {
-            setUser({
-                token: authorizationState.response.token,
-                tokenExpiresIn: authorizationState.response.expiresIn
-            });
+        if (authorizationResponse) {
+            login.doLogin(authorizationResponse.token, authorizationResponse.expiresIn);
             setAuthorizationFinished(true);
         }
-    }, [authorizationState.response, setUser]);
+    }, [authorizationResponse, login, setUser]);
 
     useEffect(() => {
         if (authorizationState.error) {

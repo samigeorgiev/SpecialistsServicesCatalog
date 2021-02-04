@@ -1,9 +1,13 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useContext } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { FacebookAuthorizationHandler } from './FacebookAuthorizationHandler';
 import { Home } from './Home';
+import { UserPage } from './UserPage';
+import { UserContext } from '../contexts/User/UserContext';
 
 export const Routes: FunctionComponent = () => {
+    const { user } = useContext(UserContext);
+
     return (
         <Switch>
             <Route path="/" exact>
@@ -12,6 +16,11 @@ export const Routes: FunctionComponent = () => {
             <Route path={process.env.REACT_APP_FACEBOOK_REDIRECT_URI} exact>
                 <FacebookAuthorizationHandler />
             </Route>
+            {user !== null ? (
+                <Route path="/user">
+                    <UserPage />
+                </Route>
+            ) : null}
         </Switch>
     );
 };
