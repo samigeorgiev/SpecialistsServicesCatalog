@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("specialists")
+@RequestMapping("/specialists")
 @PreAuthorize("isAuthenticated()")
 public class SpecialistsController {
 
@@ -26,7 +26,7 @@ public class SpecialistsController {
         this.specialistsService = specialistsService;
     }
 
-    @PostMapping("become-specialist")
+    @PostMapping("/become-specialist")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void becomeSpecialist(@AuthenticationPrincipal User user) {
         if (user.getSpecialist() != null) {
@@ -35,13 +35,13 @@ public class SpecialistsController {
         specialistsService.becomeSpecialist(user);
     }
 
-    @GetMapping("is-specialist")
+    @GetMapping("/is-specialist")
     public IsSpecialistResponse isSpecialist(@AuthenticationPrincipal User user) {
         boolean isSpecialist = user.getSpecialist() != null;
         return new IsSpecialistResponse(isSpecialist);
     }
 
-    @GetMapping("services")
+    @GetMapping("/services")
     public List<OfferedServiceDto> getOfferedServices(@AuthenticationPrincipal User user) {
         Specialist specialist = user.getSpecialist();
         if (specialist == null) {
@@ -50,7 +50,7 @@ public class SpecialistsController {
         return specialistsService.getOfferedServices(specialist.getId());
     }
 
-    @PostMapping("services")
+    @PostMapping("/services")
     public void addService(@AuthenticationPrincipal User user, @Valid @RequestBody AddOfferedServiceRequest request) {
         Specialist specialist = user.getSpecialist();
         if (specialist == null) {
@@ -59,7 +59,7 @@ public class SpecialistsController {
         specialistsService.addService(specialist, request);
     }
 
-    @GetMapping("service-requests")
+    @GetMapping("/service-requests")
     public GetServiceRequestsResponse getServiceRequests(@AuthenticationPrincipal User user,
                                                          @RequestParam Optional<ServiceRequestStatus> serviceStatus) {
         Specialist specialist = user.getSpecialist();

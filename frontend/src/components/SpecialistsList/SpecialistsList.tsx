@@ -2,6 +2,7 @@ import React, { FunctionComponent, useContext, useEffect, useState } from 'react
 import { Button, List } from 'semantic-ui-react';
 import { UserContext } from '../../contexts/User/UserContext';
 import { makeServiceRequest } from '../../services/serviceRequestsService';
+import { toast } from 'react-toastify';
 
 export interface Props {
     serviceId?: number;
@@ -26,8 +27,13 @@ export const SpecialistsList: FunctionComponent<Props> = props => {
         }
 
         makeServiceRequest(user, { requestedServiceId })
-            .then(response => console.log(response))
-            .catch(error => console.log(error));
+            .then(() => {
+                toast.success('Service request made successfully');
+            })
+            .catch(error => {
+                console.log(error);
+                toast.error(error.message);
+            });
     };
 
     return (

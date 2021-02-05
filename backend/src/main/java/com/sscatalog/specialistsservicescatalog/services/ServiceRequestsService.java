@@ -1,10 +1,7 @@
 package com.sscatalog.specialistsservicescatalog.services;
 
 import com.sscatalog.specialistsservicescatalog.dtos.MakeServiceRequestRequest;
-import com.sscatalog.specialistsservicescatalog.entities.OfferedService;
-import com.sscatalog.specialistsservicescatalog.entities.ServiceRequest;
-import com.sscatalog.specialistsservicescatalog.entities.ServiceRequestStatus;
-import com.sscatalog.specialistsservicescatalog.entities.User;
+import com.sscatalog.specialistsservicescatalog.entities.*;
 import com.sscatalog.specialistsservicescatalog.exceptions.ApiException;
 import com.sscatalog.specialistsservicescatalog.repositories.OfferedServiceRepository;
 import com.sscatalog.specialistsservicescatalog.repositories.ServiceRequestRepository;
@@ -27,6 +24,10 @@ public class ServiceRequestsService {
         OfferedService requestedService = offeredServiceRepository.findById(request.getRequestedServiceId())
                                                                   .orElseThrow(() -> new ApiException(
                                                                           "Offered service does not exists"));
+        Specialist requestedServiceSpecialist = requestedService.getSpecialist();
+        if (requestedServiceSpecialist.getUser().equals(user)) {
+            throw new ApiException("Requestor is the same as the requested service specialist");
+        }
         ServiceRequest serviceRequest = new ServiceRequest(ServiceRequestStatus.PENDING, false, user, requestedService);
         serviceRequestRepository.save(serviceRequest);
     }

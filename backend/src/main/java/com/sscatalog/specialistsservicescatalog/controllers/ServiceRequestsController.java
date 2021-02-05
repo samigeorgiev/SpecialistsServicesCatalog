@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("service-requests")
+@RequestMapping("/service-requests")
 @PreAuthorize("isAuthenticated()")
 public class ServiceRequestsController {
 

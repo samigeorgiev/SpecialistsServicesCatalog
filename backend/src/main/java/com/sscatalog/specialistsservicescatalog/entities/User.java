@@ -2,11 +2,10 @@ package com.sscatalog.specialistsservicescatalog.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
-@Table(name = "users", indexes = {
-        @Index(columnList = "facebook_id", unique = true)
-})
+@Table(name = "users", indexes = { @Index(columnList = "facebook_id", unique = true) })
 public class User {
 
     @Id
@@ -31,6 +30,23 @@ public class User {
     public User(String name, long facebookId) {
         this.name = name;
         this.facebookId = facebookId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User)o;
+        return facebookId == user.facebookId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(facebookId);
     }
 
     public long getId() {
