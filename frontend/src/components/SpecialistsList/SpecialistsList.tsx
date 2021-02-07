@@ -1,6 +1,8 @@
 import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
 import { Button, List } from 'semantic-ui-react';
 import { UserContext } from '../../contexts/User/UserContext';
+import { makeServiceRequest } from '../../services/serviceRequestsService';
+import { toast } from 'react-toastify';
 
 export interface Props {
     serviceId?: number;
@@ -19,6 +21,20 @@ export const SpecialistsList: FunctionComponent<Props> = props => {
             });
     }, [props.serviceId]);
 
+    const requestServiceHandler = (requestedServiceId: number) => {
+        if (user === null) {
+            throw new Error('User is null');
+        }
+
+        makeServiceRequest(user, { requestedServiceId })
+            .then(() => {
+                toast.success('Service request made successfully');
+            })
+            .catch(error => {
+                toast.error(error.message);
+            });
+    };
+
     return (
         <List divided relaxed>
             {offeredServices.map(offeredService => (
@@ -27,7 +43,11 @@ export const SpecialistsList: FunctionComponent<Props> = props => {
                     <List.Content>
                         <p>Price: {offeredService.price}</p>
                         <p>Is prepaid: {offeredService.prepaid ? 'yes' : 'no'}</p>
-                        {user !== null ? <Button color="green">Request</Button> : null}
+                        {user !== null ? (
+                            <Button color="green" onClick={() => requestServiceHandler(offeredService.id)}>
+                                Request
+                            </Button>
+                        ) : null}
                     </List.Content>
                 </List.Item>
             ))}
@@ -40,6 +60,7 @@ interface GetOfferedServicesResponse {
 }
 
 interface OfferedService {
+    id: number;
     specialist: Specialist;
     service: Service;
     price: number;

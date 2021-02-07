@@ -1,31 +1,39 @@
 package com.sscatalog.specialistsservicescatalog.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "specialists_services")
+@Table(name = "offered_services", indexes = {
+        @Index(columnList = "specialist_id"),
+        @Index(columnList = "service_id")
+})
 public class OfferedService {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
     @Column(name = "price")
+    @NotNull
     private double price;
 
     @Column(name = "is_prepaid")
+    @NotNull
     private boolean isPrepaid;
 
     @ManyToOne
     @JoinColumn(name = "specialist_id")
+    @NotNull
     private Specialist specialist;
 
     @ManyToOne
     @JoinColumn(name = "service_id")
+    @NotNull
     private Service service;
 
-    public OfferedService() {
+    protected OfferedService() {
     }
 
     public OfferedService(double price, boolean isPrepaid) {

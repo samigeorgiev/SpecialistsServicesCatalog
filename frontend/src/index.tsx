@@ -5,12 +5,19 @@ import reportWebVitals from './reportWebVitals';
 import './index.css';
 import 'semantic-ui-css/semantic.min.css';
 import 'react-simple-tree-menu/dist/main.css';
+import 'react-toastify/dist/ReactToastify.min.css';
 import { UserContextProvider } from './contexts/User/UserContextProvider';
 import { BrowserRouter } from 'react-router-dom';
+import { ToastContainer, ToastContainerProps } from 'react-toastify';
+
+const toastOptions: ToastContainerProps = {
+    position: 'top-right'
+};
 
 const app = (
     <React.StrictMode>
         <BrowserRouter>
+            <ToastContainer {...toastOptions} />
             <UserContextProvider>
                 <App />
             </UserContextProvider>

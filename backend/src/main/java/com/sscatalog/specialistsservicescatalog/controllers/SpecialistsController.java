@@ -1,8 +1,8 @@
 package com.sscatalog.specialistsservicescatalog.controllers;
 
-import com.sscatalog.specialistsservicescatalog.dtos.AddOfferedServiceRequest;
-import com.sscatalog.specialistsservicescatalog.dtos.IsSpecialistResponse;
-import com.sscatalog.specialistsservicescatalog.dtos.OfferedServiceDto;
+import com.sscatalog.specialistsservicescatalog.dtos.*;
+import com.sscatalog.specialistsservicescatalog.entities.ServiceRequestStatus;
+import com.sscatalog.specialistsservicescatalog.entities.Specialist;
 import com.sscatalog.specialistsservicescatalog.entities.User;
 import com.sscatalog.specialistsservicescatalog.exceptions.ApiException;
 import com.sscatalog.specialistsservicescatalog.services.SpecialistsService;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/specialists")
@@ -42,19 +43,30 @@ public class SpecialistsController {
 
     @GetMapping("/services")
     public List<OfferedServiceDto> getOfferedServices(@AuthenticationPrincipal User user) {
-        if (user.getSpecialist() == null) {
+        Specialist specialist = user.getSpecialist();
+        if (specialist == null) {
             throw new ApiException("User is not a specialist");
         }
-        return specialistsService.getOfferedServices(user.getSpecialist()
-                                                         .getId());
+        return specialistsService.getOfferedServices(specialist.getId());
     }
 
     @PostMapping("/services")
-    public void addService(@AuthenticationPrincipal User user,
-                           @Valid @RequestBody AddOfferedServiceRequest request) {
-        if (user.getSpecialist() == null) {
+    public void addService(@AuthenticationPrincipal User user, @Valid @RequestBody AddOfferedServiceRequest request) {
+        Specialist specialist = user.getSpecialist();
+        if (specialist == null) {
             throw new ApiException("User is not a specialist");
         }
-        specialistsService.addService(user.getSpecialist(), request);
+        specialistsService.addService(specialist, request);
+    }
+
+    @GetMapping("/service-requests")
+    public GetServiceRequestsResponse getServiceRequests(@AuthenticationPrincipal User user,
+                                                         @RequestParam Optional<ServiceRequestStatus> serviceStatus) {
+        Specialist specialist = user.getSpecialist();
+        if (specialist == null) {
+            throw new ApiException("User is not a specialist");
+        }
+        List<ServiceRequestDto> serviceRequests = specialistsService.getServiceRequests(specialist, serviceStatus);
+        return new GetServiceRequestsResponse(serviceRequests);
     }
 }

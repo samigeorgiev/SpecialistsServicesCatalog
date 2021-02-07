@@ -1,6 +1,7 @@
 package com.sscatalog.specialistsservicescatalog.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -8,21 +9,23 @@ import java.util.List;
 public class Service {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
     @Column(name = "name")
+    @NotNull
     private String name;
 
     @ManyToOne
     @JoinColumn(name = "tag_id")
+    @NotNull
     private Tag tag;
 
     @OneToMany(mappedBy = "service")
     private List<OfferedService> offeredServices;
 
-    public Service() {
+    protected Service() {
     }
 
     public Service(String name) {

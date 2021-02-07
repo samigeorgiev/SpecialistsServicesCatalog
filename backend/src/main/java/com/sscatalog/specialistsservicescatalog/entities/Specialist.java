@@ -1,22 +1,26 @@
 package com.sscatalog.specialistsservicescatalog.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-@Table(name = "specialists")
+@Table(name = "specialists", indexes = {
+        @Index(columnList = "user_id", unique = true)
+})
 public class Specialist {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
     @OneToOne
     @JoinColumn(name = "user_id")
+    @NotNull
     private User user;
 
-    @OneToMany(mappedBy = "specialist")
+    @OneToMany(mappedBy = "specialist", cascade = CascadeType.ALL)
     private List<OfferedService> services;
 
     public long getId() {

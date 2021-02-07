@@ -1,9 +1,6 @@
 package com.sscatalog.specialistsservicescatalog.utils;
 
-import com.sscatalog.specialistsservicescatalog.dtos.OfferedServiceDto;
-import com.sscatalog.specialistsservicescatalog.dtos.ServiceDto;
-import com.sscatalog.specialistsservicescatalog.dtos.SpecialistDto;
-import com.sscatalog.specialistsservicescatalog.dtos.TagDto;
+import com.sscatalog.specialistsservicescatalog.dtos.*;
 import com.sscatalog.specialistsservicescatalog.entities.*;
 
 import java.util.ArrayList;
@@ -13,7 +10,8 @@ public class DtoConverter {
     public static OfferedServiceDto toOfferedServiceDto(OfferedService entity) {
         Service service = entity.getService();
         Specialist specialist = entity.getSpecialist();
-        return new OfferedServiceDto(toSpecialistDto(specialist),
+        return new OfferedServiceDto(entity.getId(),
+                                     toSpecialistDto(specialist),
                                      toServiceDto(service),
                                      entity.getPrice(),
                                      entity.isPrepaid());
@@ -33,5 +31,17 @@ public class DtoConverter {
         Tag parentTag = entity.getParentTag();
         Long parentTagId = parentTag != null ? parentTag.getId() : null;
         return new TagDto(entity.getId(), entity.getName(), parentTagId, new ArrayList<>());
+    }
+
+    public static ServiceRequestDto toServiceRequestDto(ServiceRequest entity) {
+        User requestor = entity.getRequestor();
+        OfferedService requestedService = entity.getRequestedService();
+        return new ServiceRequestDto(entity.getId(),
+                                     entity.getStatus(),
+                                     entity.isPaid(),
+                                     entity.getRating(),
+                                     entity.getComment(),
+                                     requestor.getName(),
+                                     toOfferedServiceDto(requestedService));
     }
 }
