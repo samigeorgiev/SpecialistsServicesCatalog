@@ -13,6 +13,10 @@ public class Specialist {
     @Column(name = "id")
     private long id;
 
+    @Column("stripe_account_id")
+    @NotNull
+    private String stripeAccountId;
+
     @OneToOne
     @JoinColumn(name = "user_id")
     @NotNull
@@ -21,12 +25,26 @@ public class Specialist {
     @OneToMany(mappedBy = "specialist", cascade = CascadeType.ALL)
     private List<OfferedService> services;
 
+    protected Specialist() {}
+
+    public Specialist(String stripeAccountId) {
+        this.stripeAccountId = stripeAccountId;
+    }
+
     public long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getStripeAccountId() {
+        return stripeAccountId;
+    }
+
+    public void setStripeAccountId(String stripeAccountId) {
+        this.stripeAccountId = stripeAccountId;
     }
 
     public User getUser() {
