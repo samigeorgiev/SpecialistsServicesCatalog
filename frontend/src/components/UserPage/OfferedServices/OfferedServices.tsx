@@ -91,13 +91,13 @@ export const OfferedServices: FunctionComponent = () => {
     );
 };
 
-interface OfferedService {
+export interface OfferedService {
     service: Service;
     price: number;
     prepaid: boolean;
 }
 
-interface Service {
+export interface Service {
     id: number;
     name: string;
     tag: string;

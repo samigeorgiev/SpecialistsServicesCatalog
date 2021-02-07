@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
 import { Button, List } from 'semantic-ui-react';
 import { UserContext } from '../../contexts/User/UserContext';
-import { makeServiceRequest } from '../../services/serviceRequestsService';
+import { serviceRequestsService } from '../../services/serviceRequestsService';
 import { toast } from 'react-toastify';
 
 export interface Props {
@@ -26,7 +26,8 @@ export const SpecialistsList: FunctionComponent<Props> = props => {
             throw new Error('User is null');
         }
 
-        makeServiceRequest(user, { requestedServiceId })
+        serviceRequestsService
+            .makeServiceRequest(user, { requestedServiceId })
             .then(() => {
                 toast.success('Service request made successfully');
             })

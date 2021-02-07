@@ -27,4 +27,10 @@ public class ServiceRequestsController {
                                    @Valid @RequestBody MakeServiceRequestRequest request) {
         serviceRequestsService.makeServiceRequest(user, request);
     }
+
+    @PutMapping("/{serviceRequestId}/accept")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void acceptServiceRequest(@AuthenticationPrincipal User user, @PathVariable long serviceRequestId) {
+        serviceRequestsService.acceptServiceRequest(user, serviceRequestId);
+    }
 }

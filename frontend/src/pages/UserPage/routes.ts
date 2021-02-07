@@ -1,6 +1,7 @@
 import { ComponentType } from 'react';
 import { BecomeSpecialist } from '../../components/UserPage/BecomeSpecialist';
 import { OfferedServices } from '../../components/UserPage/OfferedServices';
+import { PendingServiceRequests } from '../../components/UserPage/ServiceRequests/PendingServiceRequests';
 
 export enum RoutesGroupType {
     USER,
@@ -40,6 +41,11 @@ export const routes: RoutesGroup[] = [
                 name: 'Offered Services',
                 path: 'offered-services',
                 component: OfferedServices
+            },
+            {
+                name: 'Pending service requests',
+                path: 'service-requests/pending',
+                component: PendingServiceRequests
             }
         ]
     },
