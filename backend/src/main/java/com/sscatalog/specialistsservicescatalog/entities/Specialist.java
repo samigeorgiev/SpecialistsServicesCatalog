@@ -13,7 +13,7 @@ public class Specialist {
     @Column(name = "id")
     private long id;
 
-    @Column("stripe_account_id")
+    @Column(name = "stripe_account_id")
     @NotNull
     private String stripeAccountId;
 
