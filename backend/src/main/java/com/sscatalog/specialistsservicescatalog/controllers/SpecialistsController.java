@@ -61,7 +61,8 @@ public class SpecialistsController {
 
     @GetMapping("/service-requests")
     public GetServiceRequestsResponse getServiceRequests(@AuthenticationPrincipal User user,
-                                                         @RequestParam Optional<ServiceRequestStatus> serviceStatus) {
+                                                         @RequestParam Optional<ServiceRequestStatus> serviceStatus,
+                                                         @RequestParam Optional<Boolean> paid) {
         Specialist specialist = user.getSpecialist();
         if (specialist == null) {
             throw new ApiException("User is not a specialist");

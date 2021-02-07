@@ -2,6 +2,8 @@ import { ComponentType } from 'react';
 import { BecomeSpecialist } from '../../components/UserPage/BecomeSpecialist';
 import { OfferedServices } from '../../components/UserPage/OfferedServices';
 import { PendingServiceRequests } from '../../components/UserPage/ServiceRequests/PendingServiceRequests';
+import { ServiceRequestsInProgress } from "../../components/UserPage/ServiceRequests/ServiceRequestsInProgress";
+import { PendingPaymentServiceRequests } from "../../components/UserPage/ServiceRequests/PendingPaymentServiceRequests";
 
 export enum RoutesGroupType {
     USER,
@@ -27,9 +29,9 @@ export const routes: RoutesGroup[] = [
         type: RoutesGroupType.USER,
         routes: [
             {
-                name: 'Test',
+                name: 'service-requests/pending-payment',
                 path: 'test',
-                component: BecomeSpecialist
+                component: PendingPaymentServiceRequests
             }
         ]
     },
@@ -46,6 +48,11 @@ export const routes: RoutesGroup[] = [
                 name: 'Pending service requests',
                 path: 'service-requests/pending',
                 component: PendingServiceRequests
+            },
+            {
+                name: 'Service requests in progress',
+                path: 'service-requests/in-progress',
+                component: ServiceRequestsInProgress
             }
         ]
     },
