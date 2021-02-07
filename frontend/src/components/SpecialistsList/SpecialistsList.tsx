@@ -31,7 +31,6 @@ export const SpecialistsList: FunctionComponent<Props> = props => {
                 toast.success('Service request made successfully');
             })
             .catch(error => {
-                console.log(error);
                 toast.error(error.message);
             });
     };

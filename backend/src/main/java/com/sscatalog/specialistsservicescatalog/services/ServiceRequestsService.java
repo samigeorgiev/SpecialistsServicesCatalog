@@ -7,6 +7,8 @@ import com.sscatalog.specialistsservicescatalog.repositories.OfferedServiceRepos
 import com.sscatalog.specialistsservicescatalog.repositories.ServiceRequestRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 public class ServiceRequestsService {
 
@@ -23,9 +25,9 @@ public class ServiceRequestsService {
     public void makeServiceRequest(User user, MakeServiceRequestRequest request) {
         OfferedService requestedService = offeredServiceRepository.findById(request.getRequestedServiceId())
                                                                   .orElseThrow(() -> new ApiException(
-                                                                          "Offered service does not exists"));
+                                                                          "Offered service does not exist"));
         Specialist requestedServiceSpecialist = requestedService.getSpecialist();
-        if (requestedServiceSpecialist.getUser().equals(user)) {
+        if (Objects.equals(requestedServiceSpecialist.getUser(), user)) {
             throw new ApiException("Requestor is the same as the requested service specialist");
         }
         ServiceRequest serviceRequest = new ServiceRequest(ServiceRequestStatus.PENDING, false, user, requestedService);
