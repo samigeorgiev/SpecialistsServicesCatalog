@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PaymentsJobs {
 
-    @Scheduled(cron = "0 0 0 ? * *")
+    @Scheduled(cron = "${specialists-payouts-cron}")
     public void specialistsPayouts() {
         System.out.println("Specialists payouts");
     }

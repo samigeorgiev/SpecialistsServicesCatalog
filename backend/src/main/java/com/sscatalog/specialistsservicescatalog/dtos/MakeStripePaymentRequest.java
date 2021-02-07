@@ -1,18 +1,16 @@
 package com.sscatalog.specialistsservicescatalog.dtos;
 
-import com.stripe.model.Token;
-
 public class MakeStripePaymentRequest {
 
-     private long serviceRequestId;
+     private long amount;
 
-     private Token token;
+     private StripeToken token;
 
-    public long getServiceRequestId() {
-        return serviceRequestId;
+    public long getAmount() {
+        return amount;
     }
 
-    public Token getToken() {
+    public StripeToken getToken() {
         return token;
     }
 }
