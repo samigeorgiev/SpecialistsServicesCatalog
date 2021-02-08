@@ -7,17 +7,19 @@ import { BecomeSpecialist } from './BecomeSpecialist';
 export const useBecomeSpecialist = (): BecomeSpecialist => {
     const [finished, setFinished] = useState(false);
     const { user, setUser } = useContext(UserContext);
-    const { state, sendRequest } = useHttp<void>();
+    const { state, sendRequest } = useHttp<BecomeSpecialistResponse>();
 
+    const { response } =state;
     useEffect(() => {
-        if (state.response) {
+        if (response) {
             if (user === null) {
                 throw new Error('User is not logged in');
             }
             setUser({ ...user, isSpecialist: true });
             setFinished(true);
+            window.location.href = response.stripeAccountLink;
         }
-    }, [setUser, state.response, user]);
+    }, [setUser, response, user]);
 
     const doBecomeSpecialist = (): void => {
         if (user === null) {
@@ -25,6 +27,10 @@ export const useBecomeSpecialist = (): BecomeSpecialist => {
         }
         const httpOptions: HttpOptions = {
             method: 'POST',
+            body: {
+                returnUrl: 'http://localhost:3000',
+                refreshUrl: 'http://localhost:3000'
+            },
             headers: {
                 Authorization: user.token
             }
@@ -38,3 +44,7 @@ export const useBecomeSpecialist = (): BecomeSpecialist => {
         error: state.error?.message || undefined
     };
 };
+
+interface BecomeSpecialistResponse {
+    stripeAccountLink: string;
+}
