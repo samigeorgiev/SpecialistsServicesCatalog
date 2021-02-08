@@ -1,12 +1,15 @@
 package com.sscatalog.specialistsservicescatalog.services;
 
+import com.sscatalog.specialistsservicescatalog.dtos.CommentServiceRequestRequest;
 import com.sscatalog.specialistsservicescatalog.dtos.MakeServiceRequestRequest;
+import com.sscatalog.specialistsservicescatalog.dtos.RateServiceRequestRequest;
 import com.sscatalog.specialistsservicescatalog.entities.*;
 import com.sscatalog.specialistsservicescatalog.exceptions.ApiException;
 import com.sscatalog.specialistsservicescatalog.repositories.OfferedServiceRepository;
 import com.sscatalog.specialistsservicescatalog.repositories.ServiceRequestRepository;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.Objects;
 
 @Service
@@ -65,6 +68,34 @@ public class ServiceRequestsService {
             throw new ApiException("Service request is not in " + fromStatus + " status");
         }
         serviceRequest.setStatus(toStatus);
+        serviceRequestRepository.save(serviceRequest);
+    }
+
+    public void commentServiceRequest(User user, long serviceRequestId, CommentServiceRequestRequest request) {
+        ServiceRequest serviceRequest = serviceRequestRepository.findById(serviceRequestId)
+                                                                .orElseThrow(() -> new ApiException(
+                                                                        "Service request does not exists"));
+        if (!user.equals(serviceRequest.getRequestor())) {
+            throw new ApiException("User is not the requestor of the service");
+        }
+        if (serviceRequest.getComment() != null) {
+            throw new ApiException("Service request is already commented");
+        }
+        serviceRequest.setComment(request.getComment());
+        serviceRequestRepository.save(serviceRequest);
+    }
+
+    public void rateServiceRequest(User user, long serviceRequestId, RateServiceRequestRequest request) {
+        ServiceRequest serviceRequest = serviceRequestRepository.findById(serviceRequestId)
+                                                                .orElseThrow(() -> new ApiException(
+                                                                        "Service request does not exists"));
+        if (!user.equals(serviceRequest.getRequestor())) {
+            throw new ApiException("User is not the requestor of the service");
+        }
+        if (serviceRequest.getComment() != null) {
+            throw new ApiException("Service request is already commented");
+        }
+        serviceRequest.setRating(request.getRating());
         serviceRequestRepository.save(serviceRequest);
     }
 }

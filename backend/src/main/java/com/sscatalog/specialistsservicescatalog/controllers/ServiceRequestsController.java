@@ -1,6 +1,8 @@
 package com.sscatalog.specialistsservicescatalog.controllers;
 
+import com.sscatalog.specialistsservicescatalog.dtos.CommentServiceRequestRequest;
 import com.sscatalog.specialistsservicescatalog.dtos.MakeServiceRequestRequest;
+import com.sscatalog.specialistsservicescatalog.dtos.RateServiceRequestRequest;
 import com.sscatalog.specialistsservicescatalog.entities.User;
 import com.sscatalog.specialistsservicescatalog.services.ServiceRequestsService;
 import org.springframework.http.HttpStatus;
@@ -38,5 +40,21 @@ public class ServiceRequestsController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void finishServiceRequest(@AuthenticationPrincipal User user, @PathVariable long serviceRequestId) {
         serviceRequestsService.finishServiceRequest(user, serviceRequestId);
+    }
+
+    @PutMapping("/{serviceRequestId}/comment")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void commentServiceRequest(@AuthenticationPrincipal User user,
+                                      @PathVariable long serviceRequestId,
+                                      @Valid @RequestBody CommentServiceRequestRequest request) {
+        serviceRequestsService.commentServiceRequest(user, serviceRequestId, request);
+    }
+
+    @PutMapping("/{serviceRequestId}/rate")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void rateServiceRequest(@AuthenticationPrincipal User user,
+                                   @PathVariable long serviceRequestId,
+                                   @Valid @RequestBody RateServiceRequestRequest request) {
+        serviceRequestsService.rateServiceRequest(user, serviceRequestId, request);
     }
 }
