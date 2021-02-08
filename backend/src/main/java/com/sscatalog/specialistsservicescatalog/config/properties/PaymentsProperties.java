@@ -9,11 +9,11 @@ public class PaymentsProperties {
 
     private final String stripeSecretKey;
 
-    private final String specialistsPayoutsCron;
+    private final String SpecialistsPayoutsCron;
 
     public PaymentsProperties(String stripeSecretKey, String specialistsPayoutsCron) {
         this.stripeSecretKey = stripeSecretKey;
-        this.specialistsPayoutsCron = specialistsPayoutsCron;
+        SpecialistsPayoutsCron = specialistsPayoutsCron;
     }
 
     public String getStripeSecretKey() {
@@ -21,6 +21,6 @@ public class PaymentsProperties {
     }
 
     public String getSpecialistsPayoutsCron() {
-        return specialistsPayoutsCron;
+        return SpecialistsPayoutsCron;
     }
 }
