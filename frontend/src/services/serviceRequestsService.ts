@@ -40,5 +40,40 @@ export const serviceRequestsService = {
         } catch (error) {
             throw error;
         }
-    }
+    },
+    commentServiceRequest: async (
+        user: User,
+        serviceRequestId: number,
+        comment: string
+    ): Promise<AxiosResponse<void>> => {
+        const path = `${basePath}/${serviceRequestId}/comment`;
+        const request = { comment };
+        try {
+            return await httpClient.put<void>(path, request, {
+                headers: {
+                    ...buildAuthorizationHeader(user)
+                }
+            });
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    rateServiceRequest: async (
+        user: User,
+        serviceRequestId: number,
+        rating: number
+    ): Promise<AxiosResponse<void>> => {
+        const path = `${basePath}/${serviceRequestId}/rate`;
+        const request = { rating };
+        try {
+            return await httpClient.put<void>(path, request, {
+                headers: {
+                    ...buildAuthorizationHeader(user)
+                }
+            });
+        } catch (error) {
+            throw error;
+        }
+    },
 };

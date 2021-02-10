@@ -4,6 +4,7 @@ import { OfferedServices } from '../../components/UserPage/OfferedServices';
 import { PendingServiceRequests } from '../../components/UserPage/ServiceRequests/PendingServiceRequests';
 import { ServiceRequestsInProgress } from "../../components/UserPage/ServiceRequests/ServiceRequestsInProgress";
 import { PendingPaymentServiceRequests } from "../../components/UserPage/ServiceRequests/PendingPaymentServiceRequests";
+import { FinishedServiceRequests } from "../../components/UserPage/ServiceRequests/FinishedServiceRequests";
 
 export enum RoutesGroupType {
     USER,
@@ -29,9 +30,14 @@ export const routes: RoutesGroup[] = [
         type: RoutesGroupType.USER,
         routes: [
             {
-                name: 'service-requests/pending-payment',
-                path: 'test',
+                name: 'Pending payment',
+                path: 'service-requests/pending-payment',
                 component: PendingPaymentServiceRequests
+            },
+            {
+                name: 'Finished service requests',
+                path: 'service-requests/finished',
+                component: FinishedServiceRequests
             }
         ]
     },
