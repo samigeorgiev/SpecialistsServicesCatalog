@@ -2,6 +2,7 @@ package com.sscatalog.specialistsservicescatalog.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "service_requests")
@@ -20,6 +21,9 @@ public class ServiceRequest {
     @Column(name = "paid")
     @NotNull
     private boolean paid;
+
+    @Column(name = "pay_timestamp")
+    private LocalDateTime payTimestamp;
 
     @Column(name = "rating")
     private int rating;
@@ -69,6 +73,14 @@ public class ServiceRequest {
 
     public void setPaid(boolean paid) {
         this.paid = paid;
+    }
+
+    public LocalDateTime getPayTimestamp() {
+        return payTimestamp;
+    }
+
+    public void setPayTimestamp(LocalDateTime payTimestamp) {
+        this.payTimestamp = payTimestamp;
     }
 
     public int getRating() {

@@ -1,8 +1,6 @@
 package com.sscatalog.specialistsservicescatalog.controllers;
 
-import com.sscatalog.specialistsservicescatalog.dtos.CommentServiceRequestRequest;
-import com.sscatalog.specialistsservicescatalog.dtos.MakeServiceRequestRequest;
-import com.sscatalog.specialistsservicescatalog.dtos.RateServiceRequestRequest;
+import com.sscatalog.specialistsservicescatalog.dtos.*;
 import com.sscatalog.specialistsservicescatalog.entities.User;
 import com.sscatalog.specialistsservicescatalog.services.ServiceRequestsService;
 import org.springframework.http.HttpStatus;
@@ -21,6 +19,13 @@ public class ServiceRequestsController {
 
     public ServiceRequestsController(ServiceRequestsService serviceRequestsService) {
         this.serviceRequestsService = serviceRequestsService;
+    }
+
+    @GetMapping("/{serviceRequestId}")
+    @PreAuthorize("permitAll()")
+    public GetServiceRequestResponse getServiceRequest(@PathVariable long serviceRequestId) {
+        ServiceRequestDto serviceRequest = serviceRequestsService.getServiceRequest(serviceRequestId);
+        return new GetServiceRequestResponse(serviceRequest);
     }
 
     @PostMapping

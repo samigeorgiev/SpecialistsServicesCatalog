@@ -3,13 +3,14 @@ package com.sscatalog.specialistsservicescatalog.services;
 import com.sscatalog.specialistsservicescatalog.dtos.CommentServiceRequestRequest;
 import com.sscatalog.specialistsservicescatalog.dtos.MakeServiceRequestRequest;
 import com.sscatalog.specialistsservicescatalog.dtos.RateServiceRequestRequest;
+import com.sscatalog.specialistsservicescatalog.dtos.ServiceRequestDto;
 import com.sscatalog.specialistsservicescatalog.entities.*;
 import com.sscatalog.specialistsservicescatalog.exceptions.ApiException;
 import com.sscatalog.specialistsservicescatalog.repositories.OfferedServiceRepository;
 import com.sscatalog.specialistsservicescatalog.repositories.ServiceRequestRepository;
+import com.sscatalog.specialistsservicescatalog.utils.DtoConverter;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
 import java.util.Objects;
 
 @Service
@@ -97,5 +98,11 @@ public class ServiceRequestsService {
         }
         serviceRequest.setRating(request.getRating());
         serviceRequestRepository.save(serviceRequest);
+    }
+
+    public ServiceRequestDto getServiceRequest(long serviceRequestId) {
+        return serviceRequestRepository.findById(serviceRequestId)
+                                       .map(DtoConverter::toServiceRequestDto)
+                                       .orElseThrow(() -> new ApiException("Service request not found"));
     }
 }

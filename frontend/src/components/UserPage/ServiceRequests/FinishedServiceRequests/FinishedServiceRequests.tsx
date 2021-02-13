@@ -5,7 +5,7 @@ import { usersService } from '../../../../services/usersService';
 import { toast } from 'react-toastify';
 import { Input, List, Rating, RatingProps } from 'semantic-ui-react';
 import { serviceRequestsService } from '../../../../services/serviceRequestsService';
-import {FacebookShareButton} from "react-share";
+import { FacebookShareButton } from 'react-share';
 
 export interface Props {}
 
@@ -88,7 +88,8 @@ export const FinishedServiceRequests: FunctionComponent<Props> = () => {
                         ) : (
                             <Rating defaultRating={serviceRequest.rating} maxRating={10} disabled />
                         )}
-                        <FacebookShareButton url = "http://ssc.com:3000">
+                        <FacebookShareButton
+                            url={`${"http://ssc.com:3000"}/shared-service-request?serviceRequestId=${serviceRequest.id}`}>
                             Share
                         </FacebookShareButton>
                     </List.Content>

@@ -13,6 +13,8 @@ import com.stripe.model.Charge;
 import com.stripe.param.ChargeCreateParams;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class PaymentsService {
 
@@ -47,6 +49,7 @@ public class PaymentsService {
             throw new ApiException("Payment was not successful");
         }
         serviceRequest.setPaid(true);
+        serviceRequest.setPayTimestamp(LocalDateTime.now());
         serviceRequestRepository.save(serviceRequest);
     }
 

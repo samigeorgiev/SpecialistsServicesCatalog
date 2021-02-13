@@ -2,6 +2,7 @@ import { buildAuthorizationHeader, httpClient } from '../httpClient';
 import { User } from '../contexts/User/User';
 import { MakeServiceRequestRequest } from '../dtos/MakeServiceRequestRequest';
 import { AxiosResponse } from 'axios';
+import { GetServiceRequestResponse } from '../dtos/GetServiceRequestResponse';
 
 const basePath = 'service-requests';
 
@@ -59,11 +60,7 @@ export const serviceRequestsService = {
         }
     },
 
-    rateServiceRequest: async (
-        user: User,
-        serviceRequestId: number,
-        rating: number
-    ): Promise<AxiosResponse<void>> => {
+    rateServiceRequest: async (user: User, serviceRequestId: number, rating: number): Promise<AxiosResponse<void>> => {
         const path = `${basePath}/${serviceRequestId}/rate`;
         const request = { rating };
         try {
@@ -76,4 +73,12 @@ export const serviceRequestsService = {
             throw error;
         }
     },
+    getServiceRequest: async (serviceRequestId: number): Promise<AxiosResponse<GetServiceRequestResponse>> => {
+        const path = `${basePath}/${serviceRequestId}`;
+        try {
+            return await httpClient.get<GetServiceRequestResponse>(path);
+        } catch (error) {
+            throw error;
+        }
+    }
 };
