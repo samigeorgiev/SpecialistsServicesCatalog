@@ -33,4 +33,21 @@ public class ServiceRequestsService {
         ServiceRequest serviceRequest = new ServiceRequest(ServiceRequestStatus.PENDING, false, user, requestedService);
         serviceRequestRepository.save(serviceRequest);
     }
+
+    public void acceptServiceRequest(User user, long serviceRequestId) {
+        ServiceRequest serviceRequest = serviceRequestRepository.findById(serviceRequestId)
+                                                                .orElseThrow(() -> new ApiException(
+                                                                        "Service request does not exist"));
+        User serviceRequestSpecialistUser = serviceRequest.getRequestedService()
+                                                          .getSpecialist()
+                                                          .getUser();
+        if (!serviceRequestSpecialistUser.equals(user)) {
+            throw new ApiException("Specialist is not offering this service");
+        }
+        if (serviceRequest.getStatus() != ServiceRequestStatus.PENDING) {
+            throw new ApiException("Service request is not in pending status");
+        }
+        serviceRequest.setStatus(ServiceRequestStatus.IN_PROGRESS);
+        serviceRequestRepository.save(serviceRequest);
+    }
 }
