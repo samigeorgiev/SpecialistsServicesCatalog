@@ -33,4 +33,10 @@ public class ServiceRequestsController {
     public void acceptServiceRequest(@AuthenticationPrincipal User user, @PathVariable long serviceRequestId) {
         serviceRequestsService.acceptServiceRequest(user, serviceRequestId);
     }
+
+    @PutMapping("/{serviceRequestId}/finish")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void finishServiceRequest(@AuthenticationPrincipal User user, @PathVariable long serviceRequestId) {
+        serviceRequestsService.finishServiceRequest(user, serviceRequestId);
+    }
 }
