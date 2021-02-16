@@ -18,3 +18,7 @@ oauth2 :
 
 jwt :
   secret : ${JWT_SECRET}
+
+payments :
+  stripe-secret-key: sk_test_51II8FYARlvoNFDxNWEQ6BiODLI6SXC6Bn1HEfLJ99uBnjezkpiXpryaENDIITJEQ7AtY8E66ZoTSl8HmZ5eBcBHl00dDsEjNPJ
+  specialists-payouts-cron: 0 0 0 ? * * *

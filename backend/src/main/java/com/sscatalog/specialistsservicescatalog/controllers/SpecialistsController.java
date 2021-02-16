@@ -6,7 +6,6 @@ import com.sscatalog.specialistsservicescatalog.entities.Specialist;
 import com.sscatalog.specialistsservicescatalog.entities.User;
 import com.sscatalog.specialistsservicescatalog.exceptions.ApiException;
 import com.sscatalog.specialistsservicescatalog.services.SpecialistsService;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -27,12 +26,13 @@ public class SpecialistsController {
     }
 
     @PostMapping("/become-specialist")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void becomeSpecialist(@AuthenticationPrincipal User user) {
+    public BecomeSpecialistResponse becomeSpecialist(@AuthenticationPrincipal User user,
+                                                     @Valid @RequestBody BecomeSpecialistRequest request) {
         if (user.getSpecialist() != null) {
             throw new ApiException("User is already a specialist");
         }
-        specialistsService.becomeSpecialist(user);
+        String stripeAccountLink = specialistsService.becomeSpecialist(user, request);
+        return new BecomeSpecialistResponse(stripeAccountLink);
     }
 
     @GetMapping("/is-specialist")

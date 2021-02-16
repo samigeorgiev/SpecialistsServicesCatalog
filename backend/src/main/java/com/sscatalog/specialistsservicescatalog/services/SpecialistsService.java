@@ -1,6 +1,7 @@
 package com.sscatalog.specialistsservicescatalog.services;
 
 import com.sscatalog.specialistsservicescatalog.dtos.AddOfferedServiceRequest;
+import com.sscatalog.specialistsservicescatalog.dtos.BecomeSpecialistRequest;
 import com.sscatalog.specialistsservicescatalog.dtos.OfferedServiceDto;
 import com.sscatalog.specialistsservicescatalog.dtos.ServiceRequestDto;
 import com.sscatalog.specialistsservicescatalog.entities.*;
@@ -10,6 +11,12 @@ import com.sscatalog.specialistsservicescatalog.repositories.ServiceRepository;
 import com.sscatalog.specialistsservicescatalog.repositories.ServiceRequestRepository;
 import com.sscatalog.specialistsservicescatalog.repositories.SpecialistRepository;
 import com.sscatalog.specialistsservicescatalog.utils.DtoConverter;
+import com.stripe.exception.StripeException;
+import com.stripe.model.Account;
+import com.stripe.model.AccountLink;
+import com.stripe.param.AccountCreateParams;
+import com.stripe.param.AccountLinkCreateParams;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,11 +43,44 @@ public class SpecialistsService {
         this.serviceRequestRepository = serviceRequestRepository;
     }
 
-    public void becomeSpecialist(User user) {
-        Specialist specialist = new Specialist();
+    public String becomeSpecialist(User user, BecomeSpecialistRequest request) {
+        Account account;
+        AccountLink accountLink;
+        try {
+            account = createStripeAccount();
+            accountLink = generateAccountLink(account, request.getRefreshUrl(), request.getReturnUrl());
+        } catch (StripeException exception) {
+            throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "Creating Stripe account failed", exception);
+        }
+
+        Specialist specialist = new Specialist(account.getId());
         specialist.setUser(user);
 
         specialistRepository.save(specialist);
+
+        return accountLink.getUrl();
+    }
+
+    private Account createStripeAccount() throws StripeException {
+        AccountCreateParams.Capabilities accountCapabilities = AccountCreateParams.Capabilities.builder()
+                                                                                               .build();
+        AccountCreateParams accountCreateParams = AccountCreateParams.builder()
+                                                                     .setType(AccountCreateParams.Type.STANDARD)
+                                                                     .setCapabilities(accountCapabilities)
+                                                                     .build();
+        return Account.create(accountCreateParams);
+    }
+
+    private AccountLink generateAccountLink(Account account, String refreshUrl, String returnUrl) throws
+                                                                                                  StripeException {
+        AccountLinkCreateParams.Type accountLinkType = AccountLinkCreateParams.Type.ACCOUNT_ONBOARDING;
+        AccountLinkCreateParams accountLinkCreateParams = AccountLinkCreateParams.builder()
+                                                                                 .setAccount(account.getId())
+                                                                                 .setRefreshUrl(refreshUrl)
+                                                                                 .setReturnUrl(returnUrl)
+                                                                                 .setType(accountLinkType)
+                                                                                 .build();
+        return AccountLink.create(accountLinkCreateParams);
     }
 
     public List<OfferedServiceDto> getOfferedServices(long specialistId) {
