@@ -5,6 +5,7 @@ import { Home } from './Home';
 import { UserPage } from './UserPage';
 import { UserContext } from '../contexts/User/UserContext';
 import { Browse } from './Browse';
+import {PageNotFound} from "./PageNotFound";
 
 export const Routes: FunctionComponent = () => {
     const { user } = useContext(UserContext);
@@ -25,6 +26,9 @@ export const Routes: FunctionComponent = () => {
                     <UserPage />
                 </Route>
             ) : null}
+            <Route path="/">
+                <PageNotFound />
+            </Route>
         </Switch>
     );
 };

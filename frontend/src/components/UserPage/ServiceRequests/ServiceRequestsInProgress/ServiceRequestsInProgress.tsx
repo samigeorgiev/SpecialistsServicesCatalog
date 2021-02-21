@@ -5,6 +5,7 @@ import { serviceRequestsService } from '../../../../services/serviceRequestsServ
 import { toast } from 'react-toastify';
 import { ServiceRequests } from '../ServiceRequests';
 import { Button } from 'semantic-ui-react';
+import { ServiceRequestStatus } from '../../../../dtos/ServiceRequestStatus';
 
 export interface Props {}
 
@@ -28,7 +29,7 @@ export const ServiceRequestsInProgress: FunctionComponent<Props> = () => {
 
     return (
         <ServiceRequests
-            serviceRequestStatus="IN_PROGRESS"
+            serviceRequestStatus={ServiceRequestStatus.IN_PROGRESS}
             renderServiceRequestActions={(serviceRequest, getServiceRequests) => (
                 <Button onClick={() => finishServiceRequestHandler(serviceRequest, getServiceRequests)}>Finish</Button>
             )}

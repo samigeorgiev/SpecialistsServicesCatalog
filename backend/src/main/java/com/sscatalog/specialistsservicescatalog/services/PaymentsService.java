@@ -27,7 +27,7 @@ public class PaymentsService {
         ServiceRequest serviceRequest = serviceRequestRepository.findById(request.getServiceRequestId())
                                                                 .orElseThrow(() -> new ApiException(
                                                                         "Service request not found"));
-        if (serviceRequest.isPaid() || serviceRequest.getStatus() != ServiceRequestStatus.FINISHED) {
+        if (!isServiceRequestPayable(serviceRequest)) {
             throw new ApiException("Service request is not payable");
         }
         OfferedService requestedService = serviceRequest.getRequestedService();
@@ -48,6 +48,10 @@ public class PaymentsService {
         }
         serviceRequest.setPaid(true);
         serviceRequestRepository.save(serviceRequest);
+    }
+
+    private boolean isServiceRequestPayable(ServiceRequest serviceRequest) {
+        return serviceRequest.isPaid() || serviceRequest.getStatus() != ServiceRequestStatus.FINISHED;
     }
 
     private long toStripePrice(double price) {

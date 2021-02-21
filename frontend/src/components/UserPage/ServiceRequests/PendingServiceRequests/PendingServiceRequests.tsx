@@ -5,6 +5,7 @@ import { ServiceRequestDto } from '../../../../dtos/ServiceRequestDto';
 import { serviceRequestsService } from '../../../../services/serviceRequestsService';
 import { toast } from 'react-toastify';
 import { UserContext } from '../../../../contexts/User/UserContext';
+import { ServiceRequestStatus } from '../../../../dtos/ServiceRequestStatus';
 
 export interface Props {}
 
@@ -28,7 +29,7 @@ export const PendingServiceRequests: FunctionComponent<Props> = () => {
 
     return (
         <ServiceRequests
-            serviceRequestStatus="PENDING"
+            serviceRequestStatus={ServiceRequestStatus.PENDING}
             renderServiceRequestActions={(serviceRequest, getServiceRequests) => (
                 <Button onClick={() => acceptServiceRequestHandler(serviceRequest, getServiceRequests)}>Accept</Button>
             )}
