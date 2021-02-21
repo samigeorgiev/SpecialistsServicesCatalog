@@ -6,6 +6,7 @@ import { List } from 'semantic-ui-react';
 import { usersService } from '../../../../services/usersService';
 import StripeCheckout, { Token } from 'react-stripe-checkout';
 import { paymentsService } from '../../../../services/paymentsService';
+import { ServiceRequestStatus } from '../../../../dtos/ServiceRequestStatus';
 
 export interface Props {}
 
@@ -18,7 +19,7 @@ export const PendingPaymentServiceRequests: FunctionComponent<Props> = () => {
             throw new Error('User is null');
         }
         usersService
-            .getServiceRequests(user, 'FINISHED', false)
+            .getServiceRequests(user, ServiceRequestStatus.FINISHED, false)
             .then(response => {
                 setServiceRequests(response.data.serviceRequests);
             })

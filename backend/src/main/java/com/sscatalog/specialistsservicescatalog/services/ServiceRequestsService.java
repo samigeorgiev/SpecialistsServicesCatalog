@@ -62,7 +62,7 @@ public class ServiceRequestsService {
         User serviceRequestSpecialistUser = serviceRequest.getRequestedService()
                                                           .getSpecialist()
                                                           .getUser();
-        if (!serviceRequestSpecialistUser.equals(user)) {
+        if (!Objects.equals(serviceRequestSpecialistUser, user)) {
             throw new ApiException("Specialist is not offering this service");
         }
         if (serviceRequest.getStatus() != fromStatus) {

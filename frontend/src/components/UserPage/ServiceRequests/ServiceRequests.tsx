@@ -4,9 +4,10 @@ import { ServiceRequestDto } from '../../../dtos/ServiceRequestDto';
 import { specialistsService } from '../../../services/specialistsService';
 import { UserContext } from '../../../contexts/User/UserContext';
 import { toast } from 'react-toastify';
+import {ServiceRequestStatus} from "../../../dtos/ServiceRequestStatus";
 
 export interface Props {
-    serviceRequestStatus: string;
+    serviceRequestStatus: ServiceRequestStatus;
     renderServiceRequestActions: (serviceRequest: ServiceRequestDto, getServiceRequests: () => void) => JSX.Element;
 }
 
