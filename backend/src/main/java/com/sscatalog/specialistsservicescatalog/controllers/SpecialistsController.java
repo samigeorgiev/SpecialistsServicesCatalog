@@ -67,7 +67,9 @@ public class SpecialistsController {
         if (specialist == null) {
             throw new ApiException("User is not a specialist");
         }
-        List<ServiceRequestDto> serviceRequests = specialistsService.getServiceRequests(specialist, serviceStatus);
+        List<ServiceRequestDto> serviceRequests = specialistsService.getServiceRequests(specialist,
+                                                                                        serviceStatus,
+                                                                                        paid);
         return new GetServiceRequestsResponse(serviceRequests);
     }
 }

@@ -111,16 +111,13 @@ public class SpecialistsService {
     }
 
     public List<ServiceRequestDto> getServiceRequests(Specialist specialist,
-                                                      Optional<ServiceRequestStatus> serviceStatus) {
-        List<ServiceRequest> serviceRequests;
-        if (serviceStatus.isPresent()) {
-            serviceRequests = serviceRequestRepository.findAllBySpecialistAndStatus(specialist, serviceStatus.get());
-        } else {
-            serviceRequests = serviceRequestRepository.findAllBySpecialist(specialist);
-        }
-
-        return serviceRequests.stream()
-                              .map(DtoConverter::toServiceRequestDto)
-                              .collect(Collectors.toList());
+                                                      Optional<ServiceRequestStatus> serviceStatus,
+                                                      Optional<Boolean> paid) {
+        return serviceRequestRepository.findAllBySpecialistAndStatus(specialist,
+                                                                     serviceStatus.orElse(null),
+                                                                     paid.orElse(null))
+                                       .stream()
+                                       .map(DtoConverter::toServiceRequestDto)
+                                       .collect(Collectors.toList());
     }
 }

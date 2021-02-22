@@ -25,8 +25,10 @@ public interface ServiceRequestRepository extends JpaRepository<ServiceRequest, 
            from ServiceRequest serviceRequest
            join fetch serviceRequest.requestedService requestedService
            join fetch requestedService.specialist specialist
-           where specialist = :specialist and serviceRequest.status = :status""")
-    List<ServiceRequest> findAllBySpecialistAndStatus(Specialist specialist, ServiceRequestStatus status);
+           where specialist = :specialist
+                and (serviceRequest.status is null or serviceRequest.status = :status)
+                and (serviceRequest.paid is null or serviceRequest.paid = :paid)""")
+    List<ServiceRequest> findAllBySpecialistAndStatus(Specialist specialist, ServiceRequestStatus status, Boolean paid);
 
     @Query("""
            select serviceRequest
