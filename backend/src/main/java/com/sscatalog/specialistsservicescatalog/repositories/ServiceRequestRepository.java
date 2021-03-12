@@ -17,17 +17,9 @@ public interface ServiceRequestRepository extends JpaRepository<ServiceRequest, 
            from ServiceRequest serviceRequest
            join fetch serviceRequest.requestedService requestedService
            join fetch requestedService.specialist specialist
-           where specialist = :specialist""")
-    List<ServiceRequest> findAllBySpecialist(Specialist specialist);
-
-    @Query("""
-           select serviceRequest
-           from ServiceRequest serviceRequest
-           join fetch serviceRequest.requestedService requestedService
-           join fetch requestedService.specialist specialist
            where specialist = :specialist
-                and (serviceRequest.status is null or serviceRequest.status = :status)
-                and (serviceRequest.paid is null or serviceRequest.paid = :paid)""")
+                and (:status is null or serviceRequest.status = :status)
+                and (:paid is null or serviceRequest.paid = :paid)""")
     List<ServiceRequest> findAllBySpecialistAndStatus(Specialist specialist, ServiceRequestStatus status, Boolean paid);
 
     @Query("""
@@ -35,8 +27,8 @@ public interface ServiceRequestRepository extends JpaRepository<ServiceRequest, 
            from ServiceRequest serviceRequest
            join fetch serviceRequest.requestor requestpr
            where requestpr = :requestor
-               and (serviceRequest.status is null or serviceRequest.status = :status)
-               and (serviceRequest.paid is null or serviceRequest.paid = :paid)""")
+               and (:status is null or serviceRequest.status = :status)
+               and (:paid is null or serviceRequest.paid = :paid)""")
     List<ServiceRequest> findAllByRequestorAndStatusAndPaid(User requestor, ServiceRequestStatus status, Boolean paid);
 
     List<ServiceRequest> findAllByPayTimestampBeforeAndPaidTrue(LocalDateTime payTimestamp);

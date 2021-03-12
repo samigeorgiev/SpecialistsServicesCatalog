@@ -1,11 +1,12 @@
-import { OfferedService } from '../components/UserPage/OfferedServices/OfferedServices';
+import { ServiceRequestStatus } from './ServiceRequestStatus';
+import { OfferedServiceDto } from './OfferedServiceDto';
 
 export interface ServiceRequestDto {
     id: number;
-    status: string;
+    status: ServiceRequestStatus;
     paid: boolean;
     rating: number;
     comment: string;
     requestorName: string;
-    requestedService: OfferedService;
+    requestedService: OfferedServiceDto;
 }

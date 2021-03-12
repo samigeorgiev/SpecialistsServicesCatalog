@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { Input, List, Rating, RatingProps } from 'semantic-ui-react';
 import { serviceRequestsService } from '../../../../services/serviceRequestsService';
 import { FacebookShareButton } from 'react-share';
+import { ServiceRequestStatus } from '../../../../dtos/ServiceRequestStatus';
 
 export interface Props {}
 
@@ -18,7 +19,7 @@ export const FinishedServiceRequests: FunctionComponent<Props> = () => {
             throw new Error('User is null');
         }
         usersService
-            .getServiceRequests(user, 'FINISHED', true)
+            .getServiceRequests(user, ServiceRequestStatus.FINISHED, true)
             .then(response => {
                 setServiceRequests(response.data.serviceRequests);
             })
@@ -78,7 +79,7 @@ export const FinishedServiceRequests: FunctionComponent<Props> = () => {
                             <p>Comment: {serviceRequest.comment}</p>
                         )}
                         <br />
-                        {serviceRequest.rating == 0 ? (
+                        {serviceRequest.rating === 0 ? (
                             <Rating
                                 maxRating={10}
                                 onRate={(_event: React.MouseEvent<HTMLDivElement>, ratingProps: RatingProps) =>

@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
-import { Button, List } from 'semantic-ui-react';
+import {Button, DropdownProps, List, Select} from 'semantic-ui-react';
 import { UserContext } from '../../contexts/User/UserContext';
 import { serviceRequestsService } from '../../services/serviceRequestsService';
 import { toast } from 'react-toastify';
@@ -11,6 +11,8 @@ export interface Props {
 export const SpecialistsList: FunctionComponent<Props> = props => {
     const { user } = useContext(UserContext);
     const [offeredServices, setOfferedServices] = useState<OfferedService[]>([]);
+    // const [locationId, setLocationId] = useState<number>();
+    // const [minimumRating, setMi]
 
     useEffect(() => {
         if (props.serviceId === undefined) return;
@@ -37,22 +39,34 @@ export const SpecialistsList: FunctionComponent<Props> = props => {
     };
 
     return (
-        <List divided relaxed>
-            {offeredServices.map(offeredService => (
-                <List.Item key={offeredService.specialist.id}>
-                    <List.Header>{offeredService.specialist.name}</List.Header>
-                    <List.Content>
-                        <p>Price: {offeredService.price}</p>
-                        <p>Is prepaid: {offeredService.prepaid ? 'yes' : 'no'}</p>
-                        {user !== null ? (
-                            <Button color="green" onClick={() => requestServiceHandler(offeredService.id)}>
-                                Request
-                            </Button>
-                        ) : null}
-                    </List.Content>
-                </List.Item>
-            ))}
-        </List>
+        <>
+            {/*<Select*/}
+            {/*        options={statusOptions}*/}
+            {/*        onChange={(event: React.SyntheticEvent<HTMLElement>, data: DropdownProps) => statusChangeHandler(data)}*/}
+            {/*        placeholder="Status"*/}
+            {/*/>*/}
+            {/*<Select*/}
+            {/*        options={paidOptions}*/}
+            {/*        onChange={(event: React.SyntheticEvent<HTMLElement>, data: DropdownProps) => paidChangeHandler(data)}*/}
+            {/*        placeholder="Paid"*/}
+            {/*/>*/}
+            <List divided relaxed>
+                {offeredServices.map(offeredService => (
+                    <List.Item key={offeredService.specialist.id}>
+                        <List.Header>{offeredService.specialist.name}</List.Header>
+                        <List.Content>
+                            <p>Price: {offeredService.price}</p>
+                            <p>Is prepaid: {offeredService.prepaid ? 'yes' : 'no'}</p>
+                            {user !== null ? (
+                                <Button color="green" onClick={() => requestServiceHandler(offeredService.id)}>
+                                    Request
+                                </Button>
+                            ) : null}
+                        </List.Content>
+                    </List.Item>
+                ))}
+            </List>
+        </>
     );
 };
 

@@ -54,7 +54,7 @@ public class PaymentsService {
     }
 
     private boolean isServiceRequestPayable(ServiceRequest serviceRequest) {
-        return serviceRequest.isPaid() || serviceRequest.getStatus() != ServiceRequestStatus.FINISHED;
+        return !serviceRequest.isPaid() && serviceRequest.getStatus() == ServiceRequestStatus.FINISHED;
     }
 
     private long toStripePrice(double price) {

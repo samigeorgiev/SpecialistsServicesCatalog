@@ -5,6 +5,8 @@ import { Home } from './Home';
 import { UserPage } from './UserPage';
 import { UserContext } from '../contexts/User/UserContext';
 import { Browse } from './Browse';
+import { SharedServiceRequest } from './SharedServiceRequest';
+import { PageNotFound } from './PageNotFound';
 
 export const Routes: FunctionComponent = () => {
     const { user } = useContext(UserContext);

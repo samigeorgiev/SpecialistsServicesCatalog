@@ -93,7 +93,7 @@ public class ServiceRequestsService {
         if (!user.equals(serviceRequest.getRequestor())) {
             throw new ApiException("User is not the requestor of the service");
         }
-        if (serviceRequest.getComment() != null) {
+        if (serviceRequest.getRating() != 0) {
             throw new ApiException("Service request is already commented");
         }
         serviceRequest.setRating(request.getRating());

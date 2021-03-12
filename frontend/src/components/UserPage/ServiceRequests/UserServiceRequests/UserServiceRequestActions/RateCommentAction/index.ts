@@ -1,0 +1,1 @@
+export { RateCommentAction } from './RateCommentAction';

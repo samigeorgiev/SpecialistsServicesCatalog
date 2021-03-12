@@ -1,10 +1,12 @@
 import React, { FunctionComponent, useCallback, useContext, useEffect, useState } from 'react';
 import { Button, Form, List } from 'semantic-ui-react';
 import { UserContext } from '../../../contexts/User/UserContext';
+import {OfferedServiceDto} from "../../../dtos/OfferedServiceDto";
+import {GetServicesResponse} from "../../../dtos/GetServicesResponse";
 
 export const OfferedServices: FunctionComponent = () => {
     const { user } = useContext(UserContext);
-    const [offeredServices, setOfferedServices] = useState<OfferedService[]>([]);
+    const [offeredServices, setOfferedServices] = useState<OfferedServiceDto[]>([]);
     const [allServices, setAllServices] = useState<SelectOption[]>([]);
     const [chosenService, setChosenService] = useState<any>();
     const [price, setPrice] = useState<string>('0');
@@ -19,7 +21,7 @@ export const OfferedServices: FunctionComponent = () => {
             }
         })
             .then(res => res.json())
-            .then((services: OfferedService[]) => setOfferedServices(services));
+            .then((services: OfferedServiceDto[]) => setOfferedServices(services));
     }, [user]);
 
     useEffect(() => {
@@ -29,7 +31,7 @@ export const OfferedServices: FunctionComponent = () => {
     useEffect(() => {
         fetch(process.env.REACT_APP_GET_All_SERVICES_URL!)
             .then(res => res.json())
-            .then((servicesResponse: AllServicesResponse) => {
+            .then((servicesResponse: GetServicesResponse) => {
                 const servicesSelectOptions = servicesResponse.services.map(
                     (service): SelectOption => ({
                         key: service.id.toString(),
@@ -66,7 +68,7 @@ export const OfferedServices: FunctionComponent = () => {
                         <List.Content>
                             <p>Tag: {offeredService.service.tag}</p>
                             <p>Price: {offeredService.price}</p>
-                            <p>Is prepaid: {offeredService.prepaid ? 'true' : 'false'}</p>
+                            <p>Is prepaid: {offeredService.isPrepaid ? 'true' : 'false'}</p>
                         </List.Content>
                     </List.Item>
                 ))}
@@ -90,22 +92,6 @@ export const OfferedServices: FunctionComponent = () => {
         </>
     );
 };
-
-export interface OfferedService {
-    service: Service;
-    price: number;
-    prepaid: boolean;
-}
-
-export interface Service {
-    id: number;
-    name: string;
-    tag: string;
-}
-
-interface AllServicesResponse {
-    services: Service[];
-}
 
 interface SelectOption {
     key: string;
