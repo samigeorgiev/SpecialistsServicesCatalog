@@ -1,5 +1,5 @@
 export interface BecomeSpecialist {
-    doBecomeSpecialist: () => void;
+    doBecomeSpecialist: (locationId: number) => void;
     error?: string;
     finished: boolean;
 }

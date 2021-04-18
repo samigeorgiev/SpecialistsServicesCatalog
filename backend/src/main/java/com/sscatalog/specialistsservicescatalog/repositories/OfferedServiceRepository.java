@@ -20,7 +20,6 @@ public interface OfferedServiceRepository extends JpaRepository<OfferedService, 
            select offeredService
            from OfferedService offeredService
            join fetch offeredService.service service
-           join offeredService.serviceRequests serviceRequest
            join fetch offeredService.specialist specialist
            join fetch specialist.location location
            where service = :service

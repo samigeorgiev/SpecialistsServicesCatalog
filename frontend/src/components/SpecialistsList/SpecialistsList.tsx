@@ -1,8 +1,12 @@
 import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
-import {Button, DropdownProps, List, Select} from 'semantic-ui-react';
+import { Button, DropdownItemProps, DropdownProps, List, Select } from 'semantic-ui-react';
 import { UserContext } from '../../contexts/User/UserContext';
 import { serviceRequestsService } from '../../services/serviceRequestsService';
 import { toast } from 'react-toastify';
+import { servicesService } from '../../services/servicesService';
+import { OfferedServiceDto } from '../../dtos/OfferedServiceDto';
+import { LocationDto } from '../../dtos/LocationDto';
+import { locationsService } from '../../services/locationsService';
 
 export interface Props {
     serviceId?: number;
@@ -10,18 +14,33 @@ export interface Props {
 
 export const SpecialistsList: FunctionComponent<Props> = props => {
     const { user } = useContext(UserContext);
-    const [offeredServices, setOfferedServices] = useState<OfferedService[]>([]);
-    // const [locationId, setLocationId] = useState<number>();
-    // const [minimumRating, setMi]
+    const [offeredServices, setOfferedServices] = useState<OfferedServiceDto[]>([]);
+    const [locations, setLocations] = useState<LocationDto[]>([]);
+    const [locationId, setLocationId] = useState<number>();
+    const [minimumRating, setMinimumRating] = useState<number>();
+
+    useEffect(() => {
+        locationsService
+            .getLocations()
+            .then(response => {
+                setLocations(response.data.locations);
+            })
+            .catch(error => {
+                toast.error(error.message);
+            });
+    }, []);
 
     useEffect(() => {
         if (props.serviceId === undefined) return;
-        fetch(`${process.env.REACT_APP_GET_OFFERED_SERVICES_BY_SERVICE_URL}/${props.serviceId}/offered-services`)
-            .then(res => res.json())
-            .then((getOfferedServicesResponse: GetOfferedServicesResponse) => {
-                setOfferedServices(getOfferedServicesResponse.offeredServices);
-            });
-    }, [props.serviceId]);
+        servicesService.getOfferedServices(props.serviceId, locationId, minimumRating).then(response => {
+            setOfferedServices(response.data.offeredServices);
+        });
+    }, [locationId, minimumRating, props.serviceId]);
+
+    const locationChangeHandler = (data: DropdownProps) => {
+        const value = data.value as number;
+        setLocationId(value);
+    };
 
     const requestServiceHandler = (requestedServiceId: number) => {
         if (user === null) {
@@ -38,13 +57,26 @@ export const SpecialistsList: FunctionComponent<Props> = props => {
             });
     };
 
+    const locationsOptions: DropdownItemProps[] = locations.map(location => ({
+        key: location.id,
+        value: location.id,
+        text: location.name
+    }));
+    locationsOptions.push({
+        key: 'any',
+        value: undefined,
+        text: 'any'
+    });
+
     return (
         <>
-            {/*<Select*/}
-            {/*        options={statusOptions}*/}
-            {/*        onChange={(event: React.SyntheticEvent<HTMLElement>, data: DropdownProps) => statusChangeHandler(data)}*/}
-            {/*        placeholder="Status"*/}
-            {/*/>*/}
+            <Select
+                onChange={(event: React.SyntheticEvent<HTMLElement>, data: DropdownProps) =>
+                    locationChangeHandler(data)
+                }
+                options={locationsOptions}
+                placeholder="Select location"
+            />
             {/*<Select*/}
             {/*        options={paidOptions}*/}
             {/*        onChange={(event: React.SyntheticEvent<HTMLElement>, data: DropdownProps) => paidChangeHandler(data)}*/}
@@ -56,7 +88,7 @@ export const SpecialistsList: FunctionComponent<Props> = props => {
                         <List.Header>{offeredService.specialist.name}</List.Header>
                         <List.Content>
                             <p>Price: {offeredService.price}</p>
-                            <p>Is prepaid: {offeredService.prepaid ? 'yes' : 'no'}</p>
+                            <p>Is prepaid: {offeredService.isPrepaid ? 'yes' : 'no'}</p>
                             {user !== null ? (
                                 <Button color="green" onClick={() => requestServiceHandler(offeredService.id)}>
                                     Request
@@ -69,24 +101,3 @@ export const SpecialistsList: FunctionComponent<Props> = props => {
         </>
     );
 };
-
-interface GetOfferedServicesResponse {
-    offeredServices: OfferedService[];
-}
-
-interface OfferedService {
-    id: number;
-    specialist: Specialist;
-    service: Service;
-    price: number;
-    prepaid: boolean;
-}
-
-interface Specialist {
-    id: number;
-    name: string;
-}
-
-interface Service {
-    name: string;
-}

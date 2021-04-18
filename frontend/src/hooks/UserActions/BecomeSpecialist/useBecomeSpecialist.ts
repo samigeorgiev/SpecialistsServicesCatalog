@@ -21,13 +21,14 @@ export const useBecomeSpecialist = (): BecomeSpecialist => {
         }
     }, [setUser, response, user]);
 
-    const doBecomeSpecialist = (): void => {
+    const doBecomeSpecialist = (locationId: number): void => {
         if (user === null) {
             throw new Error('User is not authenticated');
         }
         const httpOptions: HttpOptions = {
             method: 'POST',
             body: {
+                locationId: locationId,
                 returnUrl: 'http://localhost:3000',
                 refreshUrl: 'http://localhost:3000'
             },

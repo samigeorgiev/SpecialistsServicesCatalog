@@ -2,6 +2,7 @@ package com.sscatalog.specialistsservicescatalog.services;
 
 import com.sscatalog.specialistsservicescatalog.dtos.OfferedServiceDto;
 import com.sscatalog.specialistsservicescatalog.dtos.ServiceDto;
+import com.sscatalog.specialistsservicescatalog.entities.OfferedService;
 import com.sscatalog.specialistsservicescatalog.entities.Service;
 import com.sscatalog.specialistsservicescatalog.exceptions.ApiException;
 import com.sscatalog.specialistsservicescatalog.repositories.OfferedServiceRepository;
@@ -37,16 +38,14 @@ public class ServicesService {
                                                       Optional<Double> maximumPrice) {
         Service service = serviceRepository.findById(serviceId)
                                            .orElseThrow(() -> new ApiException("Invalid service id"));
-        this.offeredServiceRepository.findAllByServiceAndSpecialistLocationAndMinimumRatingAndMinumumPrice(service,
-                                                                                                           locationId.orElse(
-                                                                                                                   null),
-                                                                                                           minimumRating.orElse(
-                                                                                                                   null),
-                                                                                                           maximumPrice.orElse(
-                                                                                                                   null));
-        return service.getOfferedServices()
-                      .stream()
-                      .map(DtoConverter::toOfferedServiceDto)
-                      .collect(Collectors.toList());
+        List<OfferedService> offeredServices =
+                this.offeredServiceRepository.findAllByServiceAndSpecialistLocationAndMinimumRatingAndMinumumPrice(
+                        service,
+                        locationId.orElse(null),
+                        minimumRating.orElse(null),
+                        maximumPrice.orElse(null));
+        return offeredServices.stream()
+                              .map(DtoConverter::toOfferedServiceDto)
+                              .collect(Collectors.toList());
     }
 }

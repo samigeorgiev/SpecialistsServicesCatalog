@@ -23,8 +23,7 @@ public class Location {
     protected Location() {
     }
 
-    public Location(int id, String name) {
-        this.id = id;
+    public Location(String name) {
         this.name = name;
     }
 
