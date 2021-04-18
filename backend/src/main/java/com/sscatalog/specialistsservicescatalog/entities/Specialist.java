@@ -25,6 +25,10 @@ public class Specialist {
     @OneToMany(mappedBy = "specialist", cascade = CascadeType.ALL)
     private List<OfferedService> services;
 
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    private Location location;
+
     protected Specialist() {}
 
     public Specialist(String stripeAccountId) {
@@ -61,5 +65,13 @@ public class Specialist {
 
     public void setServices(List<OfferedService> services) {
         this.services = services;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 }

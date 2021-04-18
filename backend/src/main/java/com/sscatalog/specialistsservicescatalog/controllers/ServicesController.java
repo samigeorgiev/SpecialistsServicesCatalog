@@ -5,12 +5,10 @@ import com.sscatalog.specialistsservicescatalog.dtos.GetServicesResponse;
 import com.sscatalog.specialistsservicescatalog.dtos.OfferedServiceDto;
 import com.sscatalog.specialistsservicescatalog.dtos.ServiceDto;
 import com.sscatalog.specialistsservicescatalog.services.ServicesService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/services")
@@ -27,8 +25,15 @@ public class ServicesController {
     }
 
     @GetMapping("/{serviceId}/offered-services")
-    public GetOfferedServicesResponse getOfferedServices(@PathVariable long serviceId) {
-        List<OfferedServiceDto> offeredServices = servicesService.getOfferedServices(serviceId);
+    public GetOfferedServicesResponse getOfferedServices(@PathVariable long serviceId,
+                                                         @RequestParam Optional<Long> locationId,
+                                                         @RequestParam Optional<Double> minimumRating,
+                                                         @RequestParam Optional<Double> maximumPrice) {
+
+        List<OfferedServiceDto> offeredServices = servicesService.getOfferedServices(serviceId,
+                                                                                     locationId,
+                                                                                     minimumRating,
+                                                                                     maximumPrice);
         return new GetOfferedServicesResponse(offeredServices);
     }
 }

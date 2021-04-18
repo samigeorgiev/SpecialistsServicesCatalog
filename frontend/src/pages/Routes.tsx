@@ -5,6 +5,8 @@ import { Home } from './Home';
 import { UserPage } from './UserPage';
 import { UserContext } from '../contexts/User/UserContext';
 import { Browse } from './Browse';
+import { SharedServiceRequest } from './SharedServiceRequest';
+import { PageNotFound } from './PageNotFound';
 
 export const Routes: FunctionComponent = () => {
     const { user } = useContext(UserContext);
@@ -20,11 +22,17 @@ export const Routes: FunctionComponent = () => {
             <Route path="/browse">
                 <Browse />
             </Route>
+            <Route path="/shared-service-request" exact>
+                <SharedServiceRequest />
+            </Route>
             {user !== null ? (
                 <Route path="/user">
                     <UserPage />
                 </Route>
             ) : null}
+            <Route path="/">
+                <PageNotFound />
+            </Route>
         </Switch>
     );
 };

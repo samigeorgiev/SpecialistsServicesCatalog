@@ -44,4 +44,8 @@ public class DtoConverter {
                                      requestor.getName(),
                                      toOfferedServiceDto(requestedService));
     }
+
+    public static LocationDto toLocationDto(Location location) {
+        return new LocationDto(location.getId(), location.getName());
+    }
 }

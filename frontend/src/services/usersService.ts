@@ -1,11 +1,12 @@
 import { User } from "../contexts/User/User";
 import { buildAuthorizationHeader, httpClient } from "../httpClient";
 import { GetServiceRequestsResponse } from "../dtos/GetServiceRequestsResponse";
+import { ServiceRequestStatus } from "../dtos/ServiceRequestStatus";
 
 const basePath = 'users';
 
 export const usersService = {
-    getServiceRequests: async (user: User, serviceRequestStatus?: string, paid?: boolean) => {
+    getServiceRequests: async (user: User, serviceRequestStatus?: ServiceRequestStatus, paid?: boolean) => {
         const path = `${basePath}/service-requests`;
         const params = new URLSearchParams();
         if (serviceRequestStatus !== undefined) {

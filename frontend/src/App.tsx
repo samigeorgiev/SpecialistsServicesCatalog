@@ -1,26 +1,23 @@
-import React, { FunctionComponent } from 'react';
-import StripeCheckout, { Token } from 'react-stripe-checkout';
+import React, {FunctionComponent, useEffect} from 'react';
 import { Layout } from './components/Layout';
-import { httpClient } from './httpClient';
-import {Routes} from "./pages/Routes";
+import { Routes } from './pages/Routes';
+import {useLogin} from "./hooks/UserActions/Login/useLogin";
 
 export const App: FunctionComponent = () => {
-    const stripeKey =
-        'pk_test_51II8FYARlvoNFDxNrfFzepXnqHRWfyGx1KyYYYNjOwuQOO6jW9njdgvjUDnhhUynBNh4DjStNcYtRr9F2pb2b3a800OZG0uAFs';
+    const { doLogin } = useLogin();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        const expiration_date = localStorage.getItem('expiration_date');
+        if (token == null || expiration_date == null || new Date(expiration_date) < new Date()) {
+            return;
+        }
+        doLogin(token, new Date(expiration_date).getTime() - Date.now())
+    }, [doLogin]);
 
     return (
         <Layout>
             <Routes />
-            {/*<StripeCheckout*/}
-            {/*    amount={10000}*/}
-            {/*    stripeKey={stripeKey}*/}
-            {/*    token={paymentHandler}*/}
-            {/*    label="Pay"*/}
-            {/*    allowRememberMe={false}*/}
-            {/*    currency="BGN"*/}
-            {/*    description="Pay for service request #23"*/}
-            {/*    name="Specialist Service Catalog"*/}
-            {/*/>*/}
         </Layout>
     );
 };

@@ -6,10 +6,7 @@ import com.sscatalog.specialistsservicescatalog.dtos.OfferedServiceDto;
 import com.sscatalog.specialistsservicescatalog.dtos.ServiceRequestDto;
 import com.sscatalog.specialistsservicescatalog.entities.*;
 import com.sscatalog.specialistsservicescatalog.exceptions.ApiException;
-import com.sscatalog.specialistsservicescatalog.repositories.OfferedServiceRepository;
-import com.sscatalog.specialistsservicescatalog.repositories.ServiceRepository;
-import com.sscatalog.specialistsservicescatalog.repositories.ServiceRequestRepository;
-import com.sscatalog.specialistsservicescatalog.repositories.SpecialistRepository;
+import com.sscatalog.specialistsservicescatalog.repositories.*;
 import com.sscatalog.specialistsservicescatalog.utils.DtoConverter;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Account;
@@ -33,14 +30,18 @@ public class SpecialistsService {
 
     private final ServiceRequestRepository serviceRequestRepository;
 
+    private final LocationRepository locationRepository;
+
     public SpecialistsService(SpecialistRepository specialistRepository,
                               OfferedServiceRepository offeredServiceRepository,
                               ServiceRepository serviceRepository,
-                              ServiceRequestRepository serviceRequestRepository) {
+                              ServiceRequestRepository serviceRequestRepository,
+                              LocationRepository locationRepository) {
         this.specialistRepository = specialistRepository;
         this.offeredServiceRepository = offeredServiceRepository;
         this.serviceRepository = serviceRepository;
         this.serviceRequestRepository = serviceRequestRepository;
+        this.locationRepository = locationRepository;
     }
 
     public String becomeSpecialist(User user, BecomeSpecialistRequest request) {
@@ -55,7 +56,9 @@ public class SpecialistsService {
 
         Specialist specialist = new Specialist(account.getId());
         specialist.setUser(user);
-
+        Location location = locationRepository.findById(request.getLocationId())
+            .orElseThrow(() -> new ApiException("Location not found"));
+        specialist.setLocation(location);
         specialistRepository.save(specialist);
 
         return accountLink.getUrl();
@@ -111,16 +114,13 @@ public class SpecialistsService {
     }
 
     public List<ServiceRequestDto> getServiceRequests(Specialist specialist,
-                                                      Optional<ServiceRequestStatus> serviceStatus) {
-        List<ServiceRequest> serviceRequests;
-        if (serviceStatus.isPresent()) {
-            serviceRequests = serviceRequestRepository.findAllBySpecialistAndStatus(specialist, serviceStatus.get());
-        } else {
-            serviceRequests = serviceRequestRepository.findAllBySpecialist(specialist);
-        }
-
-        return serviceRequests.stream()
-                              .map(DtoConverter::toServiceRequestDto)
-                              .collect(Collectors.toList());
+                                                      Optional<ServiceRequestStatus> serviceStatus,
+                                                      Optional<Boolean> paid) {
+        return serviceRequestRepository.findAllBySpecialistAndStatus(specialist,
+                                                                     serviceStatus.orElse(null),
+                                                                     paid.orElse(null))
+                                       .stream()
+                                       .map(DtoConverter::toServiceRequestDto)
+                                       .collect(Collectors.toList());
     }
 }

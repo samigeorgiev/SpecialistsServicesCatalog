@@ -2,6 +2,7 @@ package com.sscatalog.specialistsservicescatalog.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name = "offered_services", indexes = { @Index(columnList = "specialist_id"), @Index(columnList = "service_id") })
@@ -29,6 +30,9 @@ public class OfferedService {
     @JoinColumn(name = "service_id")
     @NotNull
     private Service service;
+
+    @OneToMany(mappedBy = "requestedService")
+    private List<ServiceRequest> serviceRequests;
 
     protected OfferedService() {
     }
@@ -76,5 +80,13 @@ public class OfferedService {
 
     public void setService(Service service) {
         this.service = service;
+    }
+
+    public List<ServiceRequest> getServiceRequests() {
+        return serviceRequests;
+    }
+
+    public void setServiceRequests(List<ServiceRequest> serviceRequests) {
+        this.serviceRequests = serviceRequests;
     }
 }
