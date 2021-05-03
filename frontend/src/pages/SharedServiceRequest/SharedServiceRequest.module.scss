@@ -1,0 +1,26 @@
+.Card {
+    padding: 1.5rem !important;
+}
+
+.Price {
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.ReviewCard {
+    margin-top: 2rem !important;
+
+    & > div {
+        padding: 1.5rem !important;
+
+        & > p {
+            margin-bottom: 1.5rem !important;
+            font-size: 1.1rem;
+        }
+
+        & > form {
+            margin-top: 1.5rem !important;
+        }
+    }
+}

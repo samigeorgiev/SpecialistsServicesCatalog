@@ -1,0 +1,33 @@
+.BrowsePage {
+    display: grid;
+    grid-template-columns: 300px auto;
+    column-gap: 3rem;
+    margin-bottom: 3rem;
+
+    grid-template-areas: 'menu content';
+
+    & > div:first-of-type {
+        grid-area: 'menu';
+
+        & > div {
+            outline: none !important;
+        }
+    }
+    & > div:first-of-type {
+        grid-area: 'content';
+    }
+}
+
+@media (max-width: 950px) {
+    .BrowsePage {
+        grid-template-columns: 210px auto;
+    }
+}
+
+@media (max-width: 800px) {
+    .BrowsePage {
+        column-gap: 0;
+        grid-template-areas: 'content';
+        grid-template-columns: 1fr;
+    }
+}

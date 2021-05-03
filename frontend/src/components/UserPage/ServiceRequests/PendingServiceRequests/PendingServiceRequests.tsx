@@ -6,24 +6,28 @@ import { serviceRequestsService } from '../../../../services/serviceRequestsServ
 import { toast } from 'react-toastify';
 import { UserContext } from '../../../../contexts/User/UserContext';
 import { ServiceRequestStatus } from '../../../../dtos/ServiceRequestStatus';
+import { AuthModalContext } from '../../../../contexts/AuthModal/AuthModalContext';
 
 export interface Props {}
 
 export const PendingServiceRequests: FunctionComponent<Props> = () => {
     const { user } = useContext(UserContext);
+    const { openAuthenticationModalHandler } = useContext(AuthModalContext);
 
     const acceptServiceRequestHandler = (serviceRequest: ServiceRequestDto, getServiceRequests: () => void) => {
         if (user === null) {
-            throw new Error('User is null');
+            // throw new Error('User is null');
+            openAuthenticationModalHandler();
+            return;
         }
         serviceRequestsService
             .acceptServiceRequest(user, serviceRequest.id)
             .then(() => {
-                toast.success('Service request accepted');
+                // toast.success('Service request accepted');
                 getServiceRequests();
             })
             .catch(error => {
-                toast.error(error.message);
+                toast.error('Error: Service request was not accepted.');
             });
     };
 
@@ -31,7 +35,9 @@ export const PendingServiceRequests: FunctionComponent<Props> = () => {
         <ServiceRequests
             serviceRequestStatus={ServiceRequestStatus.PENDING}
             renderServiceRequestActions={(serviceRequest, getServiceRequests) => (
-                <Button onClick={() => acceptServiceRequestHandler(serviceRequest, getServiceRequests)}>Accept</Button>
+                <Button primary onClick={() => acceptServiceRequestHandler(serviceRequest, getServiceRequests)}>
+                    Accept
+                </Button>
             )}
         />
     );
