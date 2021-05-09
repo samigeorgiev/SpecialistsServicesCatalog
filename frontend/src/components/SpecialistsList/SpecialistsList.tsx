@@ -22,6 +22,7 @@ export const SpecialistsList: FunctionComponent<Props> = props => {
     const [offeredServices, setOfferedServices] = useState<OfferedServiceDto[]>([]);
     const [locations, setLocations] = useState<LocationDto[]>([]);
     const [locationId, setLocationId] = useState<number | string>('');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [minimumRating, setMinimumRating] = useState<number>();
 
     useEffect(() => {

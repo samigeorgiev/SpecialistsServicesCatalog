@@ -75,7 +75,6 @@ export const OfferedServices: FunctionComponent = () => {
         });
 
         if (!response.ok) {
-            const data = await response.json();
             toast.error('Error: Could not create service.');
             closeHandler();
             setPrice('0');

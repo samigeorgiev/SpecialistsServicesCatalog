@@ -66,7 +66,7 @@ export const UserServiceRequests: FunctionComponent = () => {
             .catch(error => {
                 toast.error('Error: Could not get services');
             });
-    }, [paid, status, user]);
+    }, [openAuthenticationModalHandler, paid, status, user]);
 
     useEffect(() => {
         getServiceRequests();
