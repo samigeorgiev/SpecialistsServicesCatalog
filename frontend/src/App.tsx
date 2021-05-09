@@ -1,7 +1,7 @@
-import React, {FunctionComponent, useEffect} from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import { Layout } from './components/Layout';
 import { Routes } from './pages/Routes';
-import {useLogin} from "./hooks/UserActions/Login/useLogin";
+import { useLogin } from './hooks/UserActions/Login/useLogin';
 
 export const App: FunctionComponent = () => {
     const { doLogin } = useLogin();
@@ -12,7 +12,7 @@ export const App: FunctionComponent = () => {
         if (token == null || expiration_date == null || new Date(expiration_date) < new Date()) {
             return;
         }
-        doLogin(token, new Date(expiration_date).getTime() - Date.now())
+        doLogin(token, new Date(expiration_date).getTime() - Date.now());
     }, [doLogin]);
 
     return (

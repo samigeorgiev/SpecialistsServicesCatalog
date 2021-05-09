@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Card, Icon, Label } from 'semantic-ui-react';
+import { Card } from 'semantic-ui-react';
 import { OfferedServiceDto } from '../../../../dtos/OfferedServiceDto';
 import { CardContent } from '../../../Common/Card/CardContent';
 import { CardFooter } from '../../../Common/Card/CardFooter';

@@ -1,19 +1,19 @@
 .BecomeSpecialist {
-    max-width: 500px !important;
-    margin: auto !important;
+  max-width: 500px !important;
+  margin: auto !important;
 
-    & > div {
-        padding: 1.5rem !important;
+  & > div {
+    padding: 1.5rem !important;
 
-        & > form > div:nth-child(2) {
-            margin: 1.5rem 0 !important;
-        }
+    & > form > div:nth-child(2) {
+      margin: 1.5rem 0 !important;
     }
+  }
 }
 
 @media (max-width: 800px) {
-    .BecomeSpecialist {
-        max-width: none !important;
-        width: 100%;
-    }
+  .BecomeSpecialist {
+    max-width: none !important;
+    width: 100%;
+  }
 }

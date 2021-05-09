@@ -2,7 +2,7 @@ import React, { FunctionComponent, useContext, useEffect, useState } from 'react
 import { useLocation } from 'react-router';
 import { Menu } from 'semantic-ui-react';
 import { UserContext } from '../../../contexts/User/UserContext';
-import { Route, RoutesGroup, RoutesGroupType } from '../../../pages/UserPage/routes';
+import { RoutesGroup, RoutesGroupType } from '../../../pages/UserPage/routes';
 
 interface Props {
     onItemSelect: (itemPath: string) => void;

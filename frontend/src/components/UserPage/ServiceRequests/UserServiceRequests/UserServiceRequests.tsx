@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useCallback, useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { Button, DropdownItemProps, DropdownProps, Form, Header, Icon, Segment, Select } from 'semantic-ui-react';
+import { Button, DropdownItemProps, DropdownProps, Form, Header, Icon, Segment } from 'semantic-ui-react';
 import { AuthModalContext } from '../../../../contexts/AuthModal/AuthModalContext';
 import { UserContext } from '../../../../contexts/User/UserContext';
 import { ServiceRequestDto } from '../../../../dtos/ServiceRequestDto';

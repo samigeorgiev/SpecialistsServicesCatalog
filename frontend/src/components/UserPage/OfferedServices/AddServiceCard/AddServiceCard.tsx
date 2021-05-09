@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Card, Icon, Label } from 'semantic-ui-react';
+import { Card, Icon } from 'semantic-ui-react';
 import { CardLabel } from '../../../Common/Card/CardLabel';
 import styles from './AddServiceCard.module.scss';
 

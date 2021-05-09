@@ -57,7 +57,7 @@ public class SpecialistsService {
         Specialist specialist = new Specialist(account.getId());
         specialist.setUser(user);
         Location location = locationRepository.findById(request.getLocationId())
-            .orElseThrow(() -> new ApiException("Location not found"));
+                                              .orElseThrow(() -> new ApiException("Location not found"));
         specialist.setLocation(location);
         specialistRepository.save(specialist);
 

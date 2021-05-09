@@ -1,17 +1,5 @@
 import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
-import {
-    Button,
-    Card,
-    DropdownItemProps,
-    DropdownProps,
-    Form,
-    Header,
-    Icon,
-    Label,
-    List,
-    Segment,
-    Select
-} from 'semantic-ui-react';
+import { Button, DropdownItemProps, DropdownProps, Form, Header, Icon, Segment } from 'semantic-ui-react';
 import { UserContext } from '../../contexts/User/UserContext';
 import { serviceRequestsService } from '../../services/serviceRequestsService';
 import { toast } from 'react-toastify';
@@ -42,7 +30,7 @@ export const SpecialistsList: FunctionComponent<Props> = props => {
             .then(response => {
                 setLocations(response.data.locations);
             })
-            .catch(error => {
+            .catch(() => {
                 toast.error('Error: Could not get locations');
             });
     }, []);
@@ -74,7 +62,7 @@ export const SpecialistsList: FunctionComponent<Props> = props => {
             // .then(() => {
             //     toast.success('Service request made successfully');
             // })
-            .catch(error => {
+            .catch(() => {
                 toast.error('Error: Could not request servive.');
             });
     };

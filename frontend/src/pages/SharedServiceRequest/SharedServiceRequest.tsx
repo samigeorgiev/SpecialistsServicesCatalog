@@ -3,7 +3,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { serviceRequestsService } from '../../services/serviceRequestsService';
 import { ServiceRequestDto } from '../../dtos/ServiceRequestDto';
 import { toast } from 'react-toastify';
-import { Card, Dimmer, Form, Header, Image, Label, Loader, Rating, Segment } from 'semantic-ui-react';
+import { Card, Dimmer, Form, Header, Label, Loader, Rating } from 'semantic-ui-react';
 import styles from './SharedServiceRequest.module.scss';
 import { CardLabel } from '../../components/Common/Card/CardLabel';
 import { CardContent } from '../../components/Common/Card/CardContent';
@@ -28,7 +28,7 @@ export const SharedServiceRequest: FunctionComponent<Props> = () => {
             .then(response => {
                 setServiceRequest(response.data.serviceRequest);
             })
-            .catch(error => {
+            .catch(() => {
                 toast.error('Error: Service not found');
             });
     }, [search, history]);

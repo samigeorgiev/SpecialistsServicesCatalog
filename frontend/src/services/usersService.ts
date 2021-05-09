@@ -1,7 +1,7 @@
-import { User } from "../contexts/User/User";
-import { buildAuthorizationHeader, httpClient } from "../httpClient";
-import { GetServiceRequestsResponse } from "../dtos/GetServiceRequestsResponse";
-import { ServiceRequestStatus } from "../dtos/ServiceRequestStatus";
+import { User } from '../contexts/User/User';
+import { buildAuthorizationHeader, httpClient } from '../httpClient';
+import { GetServiceRequestsResponse } from '../dtos/GetServiceRequestsResponse';
+import { ServiceRequestStatus } from '../dtos/ServiceRequestStatus';
 
 const basePath = 'users';
 
@@ -26,4 +26,4 @@ export const usersService = {
             throw error;
         }
     }
-}
+};

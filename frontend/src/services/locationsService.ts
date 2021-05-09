@@ -1,7 +1,6 @@
-import { GetOfferedServicesResponse } from '../dtos/GetOfferedServicesResponse';
 import { httpClient } from '../httpClient';
 import { AxiosResponse } from 'axios';
-import { GetLocationsResponse } from "../dtos/GetLocationsResponse";
+import { GetLocationsResponse } from '../dtos/GetLocationsResponse';
 
 const basePath = '/locations';
 

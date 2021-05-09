@@ -2,9 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 import { UserMenu } from '../../components/UserPage/UserMenu';
 import { routes } from './routes';
-import { Grid } from 'semantic-ui-react';
 import styles from './UserPage.module.scss';
-import { WithMediaQuery } from '../../hoc/WithMediaQuery/WithMediaQuery';
 
 export const UserPage: FunctionComponent = () => {
     const { path, url } = useRouteMatch();

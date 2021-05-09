@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import TreeMenu, { Item, TreeNodeInArray } from 'react-simple-tree-menu';
-import { Grid } from 'semantic-ui-react';
 import { SpecialistsList } from '../../components/SpecialistsList';
 import styles from './Browse.module.scss';
 

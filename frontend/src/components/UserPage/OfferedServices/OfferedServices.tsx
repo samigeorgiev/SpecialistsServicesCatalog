@@ -1,6 +1,6 @@
 import React, { FormEvent, FunctionComponent, useCallback, useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { Button, Card, Form, Header, Icon, Label, List, Modal, Segment } from 'semantic-ui-react';
+import { Button, Form, Header, Icon, Modal, Segment } from 'semantic-ui-react';
 import { AuthModalContext } from '../../../contexts/AuthModal/AuthModalContext';
 import { UserContext } from '../../../contexts/User/UserContext';
 import { GetServicesResponse } from '../../../dtos/GetServicesResponse';
