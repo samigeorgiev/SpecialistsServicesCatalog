@@ -19,7 +19,6 @@ export const PendingPaymentServiceRequests: FunctionComponent<Props> = () => {
 
     const getServiceRequests = useCallback(() => {
         if (user === null) {
-            // throw new Error('User is null');
             openAuthenticationModalHandler();
             return;
         }
@@ -39,16 +38,14 @@ export const PendingPaymentServiceRequests: FunctionComponent<Props> = () => {
 
     const paymentHandler = (token: Token, serviceRequest: ServiceRequestDto) => {
         if (user === null) {
-            // throw new Error('User is null');
             openAuthenticationModalHandler();
             return;
         }
         paymentsService
             .makeStripePayment(user, serviceRequest.id, token)
-            // .then(() => {
-            //     toast.success('Successful payment');
-            //     getServiceRequests();
-            // })
+            .then(() => {
+                toast.success('Successful payment');
+            })
             .catch(error => {
                 toast.error('Error: Payment failed.');
             });

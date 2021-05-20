@@ -7,6 +7,5 @@ export interface OfferedServiceDto {
     service: ServiceDto;
     price: number;
     isPrepaid: boolean;
-    //
     prepaid: boolean;
 }

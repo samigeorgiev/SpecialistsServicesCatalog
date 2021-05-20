@@ -19,7 +19,6 @@ export const SharedServiceRequest: FunctionComponent<Props> = () => {
         const queryParams = new URLSearchParams(search);
         const serviceRequestId = queryParams.get('serviceRequestId');
         if (serviceRequestId === null) {
-            // throw new Error('ServiceRequests is null');
             history.push('/not-found');
             return;
         }

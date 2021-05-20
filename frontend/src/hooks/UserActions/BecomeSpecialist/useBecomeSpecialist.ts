@@ -15,7 +15,6 @@ export const useBecomeSpecialist = (): BecomeSpecialist => {
     useEffect(() => {
         if (response) {
             if (user === null) {
-                // throw new Error('User is not logged in');
                 openAuthenticationModalHandler();
                 return;
             }
@@ -27,7 +26,6 @@ export const useBecomeSpecialist = (): BecomeSpecialist => {
 
     const doBecomeSpecialist = (locationId: number): void => {
         if (user === null) {
-            // throw new Error('User is not authenticated');
             openAuthenticationModalHandler();
             return;
         }

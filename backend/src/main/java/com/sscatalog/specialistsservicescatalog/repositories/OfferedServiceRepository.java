@@ -31,5 +31,3 @@ public interface OfferedServiceRepository extends JpaRepository<OfferedService, 
                                                                                               Double minimumRating,
                                                                                               Double maximumPrice);
 }
-//           group by offeredService, service, specialist, location
-//           having :minimumRating is null or avg(serviceRequest.rating) > :minimumRating""")

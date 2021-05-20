@@ -50,7 +50,6 @@ export const UserServiceRequests: FunctionComponent = () => {
 
     const getServiceRequests = useCallback(() => {
         if (user === null) {
-            // throw new Error('User is null');
             openAuthenticationModalHandler();
             return;
         }

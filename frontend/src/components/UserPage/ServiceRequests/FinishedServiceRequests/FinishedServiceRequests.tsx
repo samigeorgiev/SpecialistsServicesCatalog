@@ -20,7 +20,6 @@ export const FinishedServiceRequests: FunctionComponent<Props> = () => {
         if (user === null) {
             openAuthenticationModalHandler();
             return;
-            // throw new Error('User is null');
         }
         usersService
             .getServiceRequests(user, ServiceRequestStatus.FINISHED, true)
@@ -38,7 +37,6 @@ export const FinishedServiceRequests: FunctionComponent<Props> = () => {
 
     const rateHandler = (serviceRequestId: number, ratingProps: RatingProps) => {
         if (user === null) {
-            // throw new Error('User is null');
             openAuthenticationModalHandler();
             return;
         }
@@ -54,7 +52,6 @@ export const FinishedServiceRequests: FunctionComponent<Props> = () => {
 
     const commentHandler = (serviceRequestId: number) => {
         if (user === null) {
-            // throw new Error('User is null');
             openAuthenticationModalHandler();
             return;
         }

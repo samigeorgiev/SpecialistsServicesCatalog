@@ -20,15 +20,14 @@ export const RateCommentAction: FunctionComponent<Props> = props => {
 
     const rateHandler = (ratingProps: RatingProps) => {
         if (user === null) {
-            // throw new Error('User is null');
             openAuthenticationModalHandler();
             return;
         }
         serviceRequestsService
             .rateServiceRequest(user, props.serviceRequest.id, ratingProps.rating as number)
-            // .then(() => {
-            //     toast.success('Successfully rated');
-            // })
+            .then(() => {
+                toast.success('Successfully rated');
+            })
             .catch(error => {
                 toast.error('Error: Rating was not saved');
             });
@@ -36,14 +35,13 @@ export const RateCommentAction: FunctionComponent<Props> = props => {
 
     const commentHandler = () => {
         if (user === null) {
-            // throw new Error('User is null');
             openAuthenticationModalHandler();
             return;
         }
         serviceRequestsService
             .commentServiceRequest(user, props.serviceRequest.id, comment)
             .then(() => {
-                // toast.success('Successfully commented');
+                toast.success('Successfully commented');
                 props.onActionSuccess();
             })
             .catch(error => {

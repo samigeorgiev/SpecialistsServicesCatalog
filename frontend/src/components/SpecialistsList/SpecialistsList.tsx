@@ -47,24 +47,23 @@ export const SpecialistsList: FunctionComponent<Props> = props => {
     }, [locationId, minimumRating, props.serviceId]);
 
     const locationChangeHandler = (data: DropdownProps) => {
-        const value = data.value as number;
-        setLocationId(+value);
+        const value = +!data.value;
+        setLocationId(value);
     };
 
     const requestServiceHandler = (requestedServiceId: number) => {
         if (user === null) {
-            // throw new Error('User is null');
             openAuthenticationModalHandler();
             return;
         }
 
         serviceRequestsService
             .makeServiceRequest(user, { requestedServiceId })
-            // .then(() => {
-            //     toast.success('Service request made successfully');
-            // })
+            .then(() => {
+                toast.success('Service request made successfully');
+            })
             .catch(() => {
-                toast.error('Error: Could not request servive.');
+                toast.error('Error: Could not request service.');
             });
     };
 

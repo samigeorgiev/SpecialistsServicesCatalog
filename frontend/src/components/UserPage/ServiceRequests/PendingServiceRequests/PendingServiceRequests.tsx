@@ -16,14 +16,13 @@ export const PendingServiceRequests: FunctionComponent<Props> = () => {
 
     const acceptServiceRequestHandler = (serviceRequest: ServiceRequestDto, getServiceRequests: () => void) => {
         if (user === null) {
-            // throw new Error('User is null');
             openAuthenticationModalHandler();
             return;
         }
         serviceRequestsService
             .acceptServiceRequest(user, serviceRequest.id)
             .then(() => {
-                // toast.success('Service request accepted');
+                toast.success('Service request accepted');
                 getServiceRequests();
             })
             .catch(error => {

@@ -22,7 +22,6 @@ export const OfferedServices: FunctionComponent = () => {
 
     const fetchServices = useCallback(() => {
         if (user === null) {
-            // throw new Error('User is not logged in');
             openAuthenticationModalHandler();
             return;
         }

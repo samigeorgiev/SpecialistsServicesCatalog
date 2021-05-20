@@ -17,14 +17,13 @@ export const PaymentAction: FunctionComponent<Props> = props => {
 
     const paymentHandler = (token: Token) => {
         if (user === null) {
-            // throw new Error('User is null');
             openAuthenticationModalHandler();
             return;
         }
         paymentsService
             .makeStripePayment(user, props.serviceRequest.id, token)
             .then(() => {
-                // toast.success('Successful payment');
+                toast.success('Successful payment');
                 props.onActionSuccess();
             })
             .catch(error => {
