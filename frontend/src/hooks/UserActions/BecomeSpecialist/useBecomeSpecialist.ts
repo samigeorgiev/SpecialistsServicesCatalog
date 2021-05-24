@@ -33,8 +33,8 @@ export const useBecomeSpecialist = (): BecomeSpecialist => {
             method: 'POST',
             body: {
                 locationId: locationId,
-                returnUrl: 'http://localhost:3000',
-                refreshUrl: 'http://localhost:3000'
+                returnUrl: window.origin,
+                refreshUrl: window.origin
             },
             headers: {
                 Authorization: user.token
