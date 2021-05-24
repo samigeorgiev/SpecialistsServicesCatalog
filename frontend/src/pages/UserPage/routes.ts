@@ -30,16 +30,16 @@ export const routes: RoutesGroup[] = [
         name: 'User',
         type: RoutesGroupType.USER,
         routes: [
-            {
-                name: 'Pending payment',
-                path: 'service-requests/pending-payment',
-                component: PendingPaymentServiceRequests
-            },
-            {
-                name: 'Finished service requests',
-                path: 'service-requests/finished',
-                component: FinishedServiceRequests
-            },
+            // {
+            //     name: 'Pending payment',
+            //     path: 'service-requests/pending-payment',
+            //     component: PendingPaymentServiceRequests
+            // },
+            // {
+            //     name: 'Finished service requests',
+            //     path: 'service-requests/finished',
+            //     component: FinishedServiceRequests
+            // },
             {
                 name: 'Service Requests',
                 path: 'user-service-requests',

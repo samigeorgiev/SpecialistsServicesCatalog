@@ -95,7 +95,7 @@ export const FinishedServiceRequests: FunctionComponent<Props> = () => {
                             <Rating defaultRating={serviceRequest.rating} maxRating={10} disabled />
                         )}
                         <FacebookShareButton
-                            url={`${'http://ssc.com:3000'}/shared-service-request?serviceRequestId=${
+                            url={`${window.origin}/shared-service-request?serviceRequestId=${
                                 serviceRequest.id
                             }`}>
                             Share

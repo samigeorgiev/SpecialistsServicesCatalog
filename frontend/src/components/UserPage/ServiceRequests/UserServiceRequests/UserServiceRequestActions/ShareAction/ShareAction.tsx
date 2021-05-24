@@ -37,7 +37,7 @@ export const ShareAction: FunctionComponent<Props> = props => {
                         Cancel
                     </Button>
                     <FacebookShareButton
-                        url={`${'http://ssc.com:3000'}/shared-service-request?serviceRequestId=${
+                        url={`${window.origin}/shared-service-request?serviceRequestId=${
                             props.serviceRequest.id
                         }`}>
                         <Button size="large" color="facebook" onClick={() => setIsOpen(false)}>
