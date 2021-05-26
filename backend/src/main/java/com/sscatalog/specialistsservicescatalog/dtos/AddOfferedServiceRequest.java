@@ -9,7 +9,7 @@ public class AddOfferedServiceRequest {
     @Min(0)
     private double price;
 
-    private boolean isPrepaid;
+    private boolean prepaid;
 
     public long getServiceId() {
         return serviceId;
@@ -20,6 +20,6 @@ public class AddOfferedServiceRequest {
     }
 
     public boolean isPrepaid() {
-        return isPrepaid;
+        return prepaid;
     }
 }

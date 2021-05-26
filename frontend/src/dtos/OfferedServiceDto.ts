@@ -6,6 +6,5 @@ export interface OfferedServiceDto {
     specialist: SpecialistDto;
     service: ServiceDto;
     price: number;
-    isPrepaid: boolean;
     prepaid: boolean;
 }

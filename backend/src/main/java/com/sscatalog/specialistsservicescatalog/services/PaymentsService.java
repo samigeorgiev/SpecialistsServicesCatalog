@@ -54,7 +54,21 @@ public class PaymentsService {
     }
 
     private boolean isServiceRequestPayable(ServiceRequest serviceRequest) {
-        return !serviceRequest.isPaid() && serviceRequest.getStatus() == ServiceRequestStatus.FINISHED;
+        if (!serviceRequest.getRequestedService()
+                           .isPrepaid()) {
+            if (serviceRequest.getStatus() == ServiceRequestStatus.FINISHED) {
+                if (!serviceRequest.isPaid()) {
+                    return true;
+                }
+            }
+        }
+        if (serviceRequest.getRequestedService()
+                          .isPrepaid()) {
+            if (serviceRequest.getStatus() == ServiceRequestStatus.IN_PROGRESS) {
+                return !serviceRequest.isPaid();
+            }
+        }
+        return false;
     }
 
     private long toStripePrice(double price) {
