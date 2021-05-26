@@ -47,8 +47,8 @@ export const SpecialistsList: FunctionComponent<Props> = props => {
     }, [locationId, minimumRating, props.serviceId]);
 
     const locationChangeHandler = (data: DropdownProps) => {
-        const value = +!data.value;
-        setLocationId(value);
+        const value = data.value as number;
+        setLocationId(+value || '');
     };
 
     const requestServiceHandler = (requestedServiceId: number) => {
