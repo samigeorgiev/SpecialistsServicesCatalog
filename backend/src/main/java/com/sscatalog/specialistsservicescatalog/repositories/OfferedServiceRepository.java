@@ -21,15 +21,16 @@ public interface OfferedServiceRepository extends JpaRepository<OfferedService, 
            from OfferedService offeredService
            join fetch offeredService.service service
            join fetch offeredService.specialist specialist
+           join offeredService.serviceRequests serviceRequest
            join fetch specialist.location location
            where service = :service
              and (:locationId is null or location.id = :locationId)
-             and (:minimumRating is null )
-             and (:maximumPrice is null or offeredService.price <= :maximumPrice)""")
-    List<OfferedService> findAllByServiceAndSpecialistLocationAndMinimumRatingAndMinumumPrice(Service service,
+             and (:maximumPrice is null or offeredService.price <= :maximumPrice)
+             and serviceRequest.rating is not null
+           group by offeredService, service, specialist, location
+           having avg(serviceRequest.rating) >= :minimumRating""")
+    List<OfferedService> findAllByServiceAndSpecialistLocationAndMinimumRatingAndMaximumPrice(Service service,
                                                                                               Long locationId,
                                                                                               Double minimumRating,
                                                                                               Double maximumPrice);
 }
-//           group by offeredService, service, specialist, location
-//           having :minimumRating is null or avg(serviceRequest.rating) > :minimumRating""")

@@ -6,15 +6,18 @@ import { toast } from 'react-toastify';
 import { ServiceRequests } from '../ServiceRequests';
 import { Button } from 'semantic-ui-react';
 import { ServiceRequestStatus } from '../../../../dtos/ServiceRequestStatus';
+import { AuthModalContext } from '../../../../contexts/AuthModal/AuthModalContext';
 
 export interface Props {}
 
 export const ServiceRequestsInProgress: FunctionComponent<Props> = () => {
     const { user } = useContext(UserContext);
+    const { openAuthenticationModalHandler } = useContext(AuthModalContext);
 
     const finishServiceRequestHandler = (serviceRequest: ServiceRequestDto, getServiceRequests: () => void) => {
         if (user === null) {
-            throw new Error('User is null');
+            openAuthenticationModalHandler();
+            return;
         }
         serviceRequestsService
             .finishServiceRequest(user, serviceRequest.id)
@@ -23,7 +26,7 @@ export const ServiceRequestsInProgress: FunctionComponent<Props> = () => {
                 getServiceRequests();
             })
             .catch(error => {
-                toast.error(error.message);
+                toast.error('Error: Service request was not accepted.');
             });
     };
 
@@ -31,7 +34,9 @@ export const ServiceRequestsInProgress: FunctionComponent<Props> = () => {
         <ServiceRequests
             serviceRequestStatus={ServiceRequestStatus.IN_PROGRESS}
             renderServiceRequestActions={(serviceRequest, getServiceRequests) => (
-                <Button onClick={() => finishServiceRequestHandler(serviceRequest, getServiceRequests)}>Finish</Button>
+                <Button primary onClick={() => finishServiceRequestHandler(serviceRequest, getServiceRequests)}>
+                    Finish
+                </Button>
             )}
         />
     );

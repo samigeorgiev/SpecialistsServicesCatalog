@@ -1,0 +1,31 @@
+.ServiceFilters {
+  margin-bottom: 1.5rem !important;
+
+  display: flex !important;
+  column-gap: 1.5rem !important;
+
+  & > div {
+    margin: 0 !important;
+  }
+}
+
+.NoServiceSegment {
+  & i {
+    margin-bottom: 1.5rem !important;
+  }
+
+  & div {
+    margin-bottom: 1.5rem !important;
+  }
+}
+
+@media (max-width: 580px) {
+  .ServiceFilters {
+    flex-flow: column;
+    row-gap: 1.5rem;
+
+    & > div {
+      width: 100%;
+    }
+  }
+}

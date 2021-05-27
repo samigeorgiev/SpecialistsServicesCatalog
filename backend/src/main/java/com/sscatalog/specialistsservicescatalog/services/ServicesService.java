@@ -39,7 +39,7 @@ public class ServicesService {
         Service service = serviceRepository.findById(serviceId)
                                            .orElseThrow(() -> new ApiException("Invalid service id"));
         List<OfferedService> offeredServices =
-                this.offeredServiceRepository.findAllByServiceAndSpecialistLocationAndMinimumRatingAndMinumumPrice(
+                this.offeredServiceRepository.findAllByServiceAndSpecialistLocationAndMinimumRatingAndMaximumPrice(
                         service,
                         locationId.orElse(null),
                         minimumRating.orElse(null),

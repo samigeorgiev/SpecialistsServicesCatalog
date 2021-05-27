@@ -1,0 +1,15 @@
+.CardFooter {
+  padding: 1rem 1.5rem !important;
+
+  & > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    & > span {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: black;
+    }
+  }
+}

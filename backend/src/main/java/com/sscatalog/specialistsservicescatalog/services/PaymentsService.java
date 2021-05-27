@@ -27,16 +27,18 @@ public class PaymentsService {
 
     public void makeStripePayment(MakeStripePaymentRequest request) {
         ServiceRequest serviceRequest = serviceRequestRepository.findById(request.getServiceRequestId())
-            .orElseThrow(() -> new ApiException("Service request not found"));
+                                                                .orElseThrow(() -> new ApiException(
+                                                                        "Service request not found"));
         if (!isServiceRequestPayable(serviceRequest)) {
             throw new ApiException("Service request is not payable");
         }
         OfferedService requestedService = serviceRequest.getRequestedService();
         ChargeCreateParams chargeParams = ChargeCreateParams.builder()
-            .setAmount(toStripePrice(requestedService.getPrice()))
-            .setCurrency("USD")
-            .setSource(request.getToken().getId())
-            .build();
+                                                            .setAmount(toStripePrice(requestedService.getPrice()))
+                                                            .setCurrency("USD")
+                                                            .setSource(request.getToken()
+                                                                              .getId())
+                                                            .build();
         Charge charge;
         try {
             charge = Charge.create(chargeParams);
@@ -52,7 +54,21 @@ public class PaymentsService {
     }
 
     private boolean isServiceRequestPayable(ServiceRequest serviceRequest) {
-        return !serviceRequest.isPaid() && serviceRequest.getStatus() == ServiceRequestStatus.FINISHED;
+        if (!serviceRequest.getRequestedService()
+                           .isPrepaid()) {
+            if (serviceRequest.getStatus() == ServiceRequestStatus.FINISHED) {
+                if (!serviceRequest.isPaid()) {
+                    return true;
+                }
+            }
+        }
+        if (serviceRequest.getRequestedService()
+                          .isPrepaid()) {
+            if (serviceRequest.getStatus() == ServiceRequestStatus.IN_PROGRESS) {
+                return !serviceRequest.isPaid();
+            }
+        }
+        return false;
     }
 
     private long toStripePrice(double price) {

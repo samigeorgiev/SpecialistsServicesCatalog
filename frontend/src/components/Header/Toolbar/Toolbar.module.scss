@@ -1,0 +1,30 @@
+.root {
+  width: 100%;
+  background-color: #2185d0;
+}
+
+.Logo {
+  padding: 1.5rem !important;
+}
+
+.Menu {
+  max-width: 1400px;
+  margin: auto !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0.35rem 1rem;
+
+  background-color: #2185d0 !important;
+
+  & > a {
+    color: rgb(255, 255, 255) !important;
+
+    &:hover {
+      background-color: #2185d0 !important;
+    }
+  }
+
+  & > div {
+    color: white !important;
+  }
+}

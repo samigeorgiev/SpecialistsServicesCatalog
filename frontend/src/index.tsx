@@ -2,13 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { App } from './App';
 import reportWebVitals from './reportWebVitals';
-import './index.css';
+import './index.scss';
 import 'semantic-ui-css/semantic.min.css';
-import 'react-simple-tree-menu/dist/main.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { UserContextProvider } from './contexts/User/UserContextProvider';
 import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer, ToastContainerProps } from 'react-toastify';
+import { AuthModalContextProvider } from './contexts/AuthModal/AuthModalContextProvider';
 
 const toastOptions: ToastContainerProps = {
     position: 'top-right'
@@ -19,7 +19,9 @@ const app = (
         <BrowserRouter>
             <ToastContainer {...toastOptions} />
             <UserContextProvider>
-                <App />
+                <AuthModalContextProvider>
+                    <App />
+                </AuthModalContextProvider>
             </UserContextProvider>
         </BrowserRouter>
     </React.StrictMode>

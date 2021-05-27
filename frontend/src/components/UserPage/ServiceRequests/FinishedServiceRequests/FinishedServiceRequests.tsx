@@ -7,16 +7,19 @@ import { Input, List, Rating, RatingProps } from 'semantic-ui-react';
 import { serviceRequestsService } from '../../../../services/serviceRequestsService';
 import { FacebookShareButton } from 'react-share';
 import { ServiceRequestStatus } from '../../../../dtos/ServiceRequestStatus';
+import { AuthModalContext } from '../../../../contexts/AuthModal/AuthModalContext';
 
 export interface Props {}
 
 export const FinishedServiceRequests: FunctionComponent<Props> = () => {
     const { user } = useContext(UserContext);
+    const { openAuthenticationModalHandler } = useContext(AuthModalContext);
     const [serviceRequests, setServiceRequests] = useState<ServiceRequestDto[]>([]);
 
     const getServiceRequests = useCallback(() => {
         if (user === null) {
-            throw new Error('User is null');
+            openAuthenticationModalHandler();
+            return;
         }
         usersService
             .getServiceRequests(user, ServiceRequestStatus.FINISHED, true)
@@ -24,9 +27,9 @@ export const FinishedServiceRequests: FunctionComponent<Props> = () => {
                 setServiceRequests(response.data.serviceRequests);
             })
             .catch(error => {
-                toast.error(error.message);
+                toast.error('Error: Could not get services.');
             });
-    }, [user]);
+    }, [user, openAuthenticationModalHandler]);
 
     useEffect(() => {
         getServiceRequests();
@@ -34,7 +37,8 @@ export const FinishedServiceRequests: FunctionComponent<Props> = () => {
 
     const rateHandler = (serviceRequestId: number, ratingProps: RatingProps) => {
         if (user === null) {
-            throw new Error('User is null');
+            openAuthenticationModalHandler();
+            return;
         }
         serviceRequestsService
             .rateServiceRequest(user, serviceRequestId, ratingProps.rating as number)
@@ -42,13 +46,14 @@ export const FinishedServiceRequests: FunctionComponent<Props> = () => {
                 getServiceRequests();
             })
             .catch(error => {
-                toast.error(error.message);
+                toast.error('Error: Rating was not saved.');
             });
     };
 
     const commentHandler = (serviceRequestId: number) => {
         if (user === null) {
-            throw new Error('User is null');
+            openAuthenticationModalHandler();
+            return;
         }
         serviceRequestsService
             .commentServiceRequest(user, serviceRequestId, 'Comment')
@@ -56,7 +61,7 @@ export const FinishedServiceRequests: FunctionComponent<Props> = () => {
                 getServiceRequests();
             })
             .catch(error => {
-                toast.error(error.message);
+                toast.error('Error: Comment was not saved.');
             });
     };
 
@@ -90,7 +95,9 @@ export const FinishedServiceRequests: FunctionComponent<Props> = () => {
                             <Rating defaultRating={serviceRequest.rating} maxRating={10} disabled />
                         )}
                         <FacebookShareButton
-                            url={`${"http://ssc.com:3000"}/shared-service-request?serviceRequestId=${serviceRequest.id}`}>
+                            url={`${window.origin}/shared-service-request?serviceRequestId=${
+                                serviceRequest.id
+                            }`}>
                             Share
                         </FacebookShareButton>
                     </List.Content>

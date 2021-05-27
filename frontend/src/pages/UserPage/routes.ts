@@ -2,9 +2,7 @@ import { ComponentType } from 'react';
 import { BecomeSpecialist } from '../../components/UserPage/BecomeSpecialist';
 import { OfferedServices } from '../../components/UserPage/OfferedServices';
 import { PendingServiceRequests } from '../../components/UserPage/ServiceRequests/PendingServiceRequests';
-import { ServiceRequestsInProgress } from "../../components/UserPage/ServiceRequests/ServiceRequestsInProgress";
-import { PendingPaymentServiceRequests } from "../../components/UserPage/ServiceRequests/PendingPaymentServiceRequests";
-import { FinishedServiceRequests } from "../../components/UserPage/ServiceRequests/FinishedServiceRequests";
+import { ServiceRequestsInProgress } from '../../components/UserPage/ServiceRequests/ServiceRequestsInProgress';
 import { UserServiceRequests } from '../../components/UserPage/ServiceRequests/UserServiceRequests';
 
 export enum RoutesGroupType {
@@ -30,16 +28,16 @@ export const routes: RoutesGroup[] = [
         name: 'User',
         type: RoutesGroupType.USER,
         routes: [
-            {
-                name: 'Pending payment',
-                path: 'service-requests/pending-payment',
-                component: PendingPaymentServiceRequests
-            },
-            {
-                name: 'Finished service requests',
-                path: 'service-requests/finished',
-                component: FinishedServiceRequests
-            },
+            // {
+            //     name: 'Pending payment',
+            //     path: 'service-requests/pending-payment',
+            //     component: PendingPaymentServiceRequests
+            // },
+            // {
+            //     name: 'Finished service requests',
+            //     path: 'service-requests/finished',
+            //     component: FinishedServiceRequests
+            // },
             {
                 name: 'Service Requests',
                 path: 'user-service-requests',

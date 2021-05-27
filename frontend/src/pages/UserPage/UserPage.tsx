@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 import { UserMenu } from '../../components/UserPage/UserMenu';
 import { routes } from './routes';
-import { Grid } from 'semantic-ui-react';
+import styles from './UserPage.module.scss';
 
 export const UserPage: FunctionComponent = () => {
     const { path, url } = useRouteMatch();
@@ -11,11 +11,13 @@ export const UserPage: FunctionComponent = () => {
     const itemSelectHandler = (itemName: string): void => history.push(`${url}/${itemName}`);
 
     return (
-        <Grid>
-            <Grid.Column width={4}>
+        <div className={styles.UserPage}>
+            {/* <WithMediaQuery maxWidth={800}> */}
+            <div>
                 <UserMenu onItemSelect={itemSelectHandler} items={routes} />
-            </Grid.Column>
-            <Grid.Column width={12}>
+            </div>
+            {/* </WithMediaQuery> */}
+            <div>
                 <Switch>
                     {routes
                         .flatMap(routesGroup => routesGroup.routes)
@@ -23,7 +25,7 @@ export const UserPage: FunctionComponent = () => {
                             <Route path={`${path}/${route.path}`} component={route.component} key={route.path} exact />
                         ))}
                 </Switch>
-            </Grid.Column>
-        </Grid>
+            </div>
+        </div>
     );
 };

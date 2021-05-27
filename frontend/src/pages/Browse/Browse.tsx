@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import TreeMenu, { Item, TreeNodeInArray } from 'react-simple-tree-menu';
-import { Grid } from 'semantic-ui-react';
 import { SpecialistsList } from '../../components/SpecialistsList';
+import styles from './Browse.module.scss';
 
 export const Browse: FunctionComponent = () => {
     const [menuNodes, setMenuNodes] = useState<MenuNode[]>();
@@ -43,14 +43,14 @@ export const Browse: FunctionComponent = () => {
     };
 
     return (
-        <Grid>
-            <Grid.Column width={4}>
+        <div className={styles.BrowsePage}>
+            <div>
                 <TreeMenu data={menuNodes} onClickItem={menuNodeClickHandler} />
-            </Grid.Column>
-            <Grid.Column width={12}>
+            </div>
+            <div>
                 <SpecialistsList serviceId={selectedService} />
-            </Grid.Column>
-        </Grid>
+            </div>
+        </div>
     );
 };
 

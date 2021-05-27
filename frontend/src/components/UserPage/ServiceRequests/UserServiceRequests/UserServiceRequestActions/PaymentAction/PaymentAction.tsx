@@ -4,25 +4,30 @@ import { ServiceRequestDto } from '../../../../../../dtos/ServiceRequestDto';
 import { paymentsService } from '../../../../../../services/paymentsService';
 import { toast } from 'react-toastify';
 import { UserContext } from '../../../../../../contexts/User/UserContext';
+import { AuthModalContext } from '../../../../../../contexts/AuthModal/AuthModalContext';
 
 export interface Props {
     serviceRequest: ServiceRequestDto;
+    onActionSuccess: () => void;
 }
 
 export const PaymentAction: FunctionComponent<Props> = props => {
     const { user } = useContext(UserContext);
+    const { openAuthenticationModalHandler } = useContext(AuthModalContext);
 
     const paymentHandler = (token: Token) => {
         if (user === null) {
-            throw new Error('User is null');
+            openAuthenticationModalHandler();
+            return;
         }
         paymentsService
             .makeStripePayment(user, props.serviceRequest.id, token)
             .then(() => {
                 toast.success('Successful payment');
+                props.onActionSuccess();
             })
             .catch(error => {
-                toast.error(error.message);
+                toast.error('Error: Payment failed.');
             });
     };
 

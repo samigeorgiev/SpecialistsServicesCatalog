@@ -48,7 +48,7 @@ public class AuthorizationService {
         }
 
         User user = userRepository.findByFacebookId(userInfo.getId())
-            .orElseGet(() -> userRepository.save(new User(userInfo.getName(), userInfo.getId())));
+                                  .orElseGet(() -> userRepository.save(new User(userInfo.getName(), userInfo.getId())));
 
         String token;
         try {

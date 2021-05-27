@@ -4,9 +4,9 @@ import com.stripe.model.Token;
 
 public class MakeStripePaymentRequest {
 
-     private long serviceRequestId;
+    private long serviceRequestId;
 
-     private Token token;
+    private Token token;
 
     public long getServiceRequestId() {
         return serviceRequestId;

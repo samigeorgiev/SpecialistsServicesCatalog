@@ -1,9 +1,9 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Button, DropdownItemProps, DropdownProps, Select } from 'semantic-ui-react';
-import styles from './index.module.css';
-import { useBecomeSpecialist } from '../../../hooks/UserActions/BecomeSpecialist/useBecomeSpecialist';
+import { Card, DropdownItemProps, DropdownProps, Form, Header } from 'semantic-ui-react';
 import { LocationDto } from '../../../dtos/LocationDto';
+import { useBecomeSpecialist } from '../../../hooks/UserActions/BecomeSpecialist/useBecomeSpecialist';
 import { locationsService } from '../../../services/locationsService';
+import styles from './index.module.scss';
 
 export const BecomeSpecialist: FunctionComponent = () => {
     const [locations, setLocations] = useState<LocationDto[]>([]);
@@ -28,17 +28,28 @@ export const BecomeSpecialist: FunctionComponent = () => {
     }));
 
     return (
-        <>
-            <Select
-                onChange={(event: React.SyntheticEvent<HTMLElement>, data: DropdownProps) =>
-                    locationChangeHandler(data)
-                }
-                options={locationsOptions}
-                placeholder="Select location"
-            />
-            <Button onClick={() => doBecomeSpecialist(locationId)} className={styles.BecomeSpecialist}>
-                Become specialist
-            </Button>
-        </>
+        <Card className={styles.BecomeSpecialist} fluid>
+            <Card.Content>
+                <Form
+                    size="large"
+                    onSubmit={event => {
+                        event.preventDefault();
+                        doBecomeSpecialist(locationId);
+                    }}>
+                    <Header size="large">Become a Specialist</Header>
+                    <Form.Select
+                        label="Location"
+                        onChange={(event: React.SyntheticEvent<HTMLElement>, data: DropdownProps) =>
+                            locationChangeHandler(data)
+                        }
+                        options={locationsOptions}
+                        placeholder="Select location"
+                    />
+                    <Form.Button type="submit" primary size="large" fluid>
+                        Become specialist
+                    </Form.Button>
+                </Form>
+            </Card.Content>
+        </Card>
     );
 };

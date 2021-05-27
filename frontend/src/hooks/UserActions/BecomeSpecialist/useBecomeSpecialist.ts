@@ -3,34 +3,38 @@ import { HttpOptions } from '../../Http/HttpOptions';
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../../contexts/User/UserContext';
 import { BecomeSpecialist } from './BecomeSpecialist';
+import { AuthModalContext } from '../../../contexts/AuthModal/AuthModalContext';
 
 export const useBecomeSpecialist = (): BecomeSpecialist => {
     const [finished, setFinished] = useState(false);
     const { user, setUser } = useContext(UserContext);
+    const { openAuthenticationModalHandler } = useContext(AuthModalContext);
     const { state, sendRequest } = useHttp<BecomeSpecialistResponse>();
 
-    const { response } =state;
+    const { response } = state;
     useEffect(() => {
         if (response) {
             if (user === null) {
-                throw new Error('User is not logged in');
+                openAuthenticationModalHandler();
+                return;
             }
             setUser({ ...user, isSpecialist: true });
             setFinished(true);
             window.location.href = response.stripeAccountLink;
         }
-    }, [setUser, response, user]);
+    }, [setUser, response, user, openAuthenticationModalHandler]);
 
     const doBecomeSpecialist = (locationId: number): void => {
         if (user === null) {
-            throw new Error('User is not authenticated');
+            openAuthenticationModalHandler();
+            return;
         }
         const httpOptions: HttpOptions = {
             method: 'POST',
             body: {
                 locationId: locationId,
-                returnUrl: 'http://localhost:3000',
-                refreshUrl: 'http://localhost:3000'
+                returnUrl: window.origin,
+                refreshUrl: window.origin
             },
             headers: {
                 Authorization: user.token
