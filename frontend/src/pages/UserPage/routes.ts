@@ -3,8 +3,6 @@ import { BecomeSpecialist } from '../../components/UserPage/BecomeSpecialist';
 import { OfferedServices } from '../../components/UserPage/OfferedServices';
 import { PendingServiceRequests } from '../../components/UserPage/ServiceRequests/PendingServiceRequests';
 import { ServiceRequestsInProgress } from '../../components/UserPage/ServiceRequests/ServiceRequestsInProgress';
-import { PendingPaymentServiceRequests } from '../../components/UserPage/ServiceRequests/PendingPaymentServiceRequests';
-import { FinishedServiceRequests } from '../../components/UserPage/ServiceRequests/FinishedServiceRequests';
 import { UserServiceRequests } from '../../components/UserPage/ServiceRequests/UserServiceRequests';
 
 export enum RoutesGroupType {
