@@ -17,6 +17,9 @@ public class User {
     @NotNull
     private String name;
 
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "facebook_id")
     @NotNull
     private long facebookId;
@@ -27,8 +30,9 @@ public class User {
     protected User() {
     }
 
-    public User(String name, long facebookId) {
+    public User(String name, String email, long facebookId) {
         this.name = name;
+        this.email = email;
         this.facebookId = facebookId;
     }
 
@@ -63,6 +67,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public long getFacebookId() {

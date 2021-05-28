@@ -11,13 +11,20 @@ public class OAuth2FacebookProperties {
 
     private final String userInfoUrl;
 
+    private final String userEmailUrl;
+
     private final String clientId;
 
     private final String clientSecret;
 
-    public OAuth2FacebookProperties(String accessTokenUrl, String userInfoUrl, String clientId, String clientSecret) {
+    public OAuth2FacebookProperties(String accessTokenUrl,
+                                    String userInfoUrl,
+                                    String userEmailUrl,
+                                    String clientId,
+                                    String clientSecret) {
         this.accessTokenUrl = accessTokenUrl;
         this.userInfoUrl = userInfoUrl;
+        this.userEmailUrl = userEmailUrl;
         this.clientId = clientId;
         this.clientSecret = clientSecret;
     }
@@ -28,6 +35,10 @@ public class OAuth2FacebookProperties {
 
     public String getUserInfoUrl() {
         return userInfoUrl;
+    }
+
+    public String getUserEmailUrl() {
+        return userEmailUrl;
     }
 
     public String getClientId() {

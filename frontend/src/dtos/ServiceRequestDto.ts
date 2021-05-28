@@ -8,5 +8,6 @@ export interface ServiceRequestDto {
     rating: number;
     comment: string;
     requestorName: string;
+    requestorEmail: string;
     requestedService: OfferedServiceDto;
 }

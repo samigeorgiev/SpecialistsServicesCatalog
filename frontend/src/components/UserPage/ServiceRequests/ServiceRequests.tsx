@@ -53,6 +53,9 @@ export const ServiceRequests: FunctionComponent<Props> = props => {
                             <p>
                                 <strong>from: </strong> {serviceRequest.requestorName}
                             </p>
+                            <p>
+                                <strong>email: </strong> {serviceRequest.requestorEmail}
+                            </p>
                             <PrepaidField isPrepaid={serviceRequest.requestedService.prepaid} />
                         </Card.Description>
                     </CardContent>

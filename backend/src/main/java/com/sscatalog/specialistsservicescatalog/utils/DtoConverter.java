@@ -42,6 +42,7 @@ public class DtoConverter {
                                      entity.getRating(),
                                      entity.getComment(),
                                      requestor.getName(),
+                                     requestor.getEmail(),
                                      toOfferedServiceDto(requestedService));
     }
 

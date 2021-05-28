@@ -16,6 +16,8 @@ public class ServiceRequestDto {
 
     private final String requestorName;
 
+    private final String requestorEmail;
+
     private final OfferedServiceDto requestedService;
 
     public ServiceRequestDto(long id,
@@ -24,6 +26,7 @@ public class ServiceRequestDto {
                              int rating,
                              String comment,
                              String requestorName,
+                             String requestorEmail,
                              OfferedServiceDto requestedService) {
         this.id = id;
         this.status = status;
@@ -31,6 +34,7 @@ public class ServiceRequestDto {
         this.rating = rating;
         this.comment = comment;
         this.requestorName = requestorName;
+        this.requestorEmail = requestorEmail;
         this.requestedService = requestedService;
     }
 
@@ -56,6 +60,10 @@ public class ServiceRequestDto {
 
     public String getRequestorName() {
         return requestorName;
+    }
+
+    public String getRequestorEmail() {
+        return requestorEmail;
     }
 
     public OfferedServiceDto getRequestedService() {

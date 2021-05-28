@@ -3,6 +3,7 @@ package com.sscatalog.specialistsservicescatalog.services;
 import com.sscatalog.specialistsservicescatalog.config.properties.OAuth2FacebookProperties;
 import com.sscatalog.specialistsservicescatalog.dtos.AuthorizationFacebookResponse;
 import com.sscatalog.specialistsservicescatalog.dtos.FacebookAccessTokenResponse;
+import com.sscatalog.specialistsservicescatalog.dtos.FacebookUserEmailResponse;
 import com.sscatalog.specialistsservicescatalog.dtos.FacebookUserInfoResponse;
 import com.sscatalog.specialistsservicescatalog.entities.User;
 import com.sscatalog.specialistsservicescatalog.exceptions.ApiException;
@@ -48,7 +49,7 @@ public class AuthorizationService {
         }
 
         User user = userRepository.findByFacebookId(userInfo.getId())
-                                  .orElseGet(() -> userRepository.save(new User(userInfo.getName(), userInfo.getId())));
+                                  .orElseGet(() -> this.createUser(userInfo, accessToken.getAccessToken()));
 
         String token;
         try {
@@ -75,5 +76,23 @@ public class AuthorizationService {
             put(OAuth2ParametersKeys.ACCESS_TOKEN, accessToken);
         }};
         return oAuth2FacebookProperties.getUserInfoUrl() + HttpUtils.buildQueryString(queryParams);
+    }
+
+    private User createUser(FacebookUserInfoResponse userInfo, String accessToken) {
+        String userEmail = null;
+        try {
+            String url = buildFacebookUserEmailUrl(userInfo.getId(), accessToken);
+            FacebookUserEmailResponse userEmailResponse = HttpUtils.get(url, FacebookUserEmailResponse.class);
+            userEmail = userEmailResponse.getEmail();
+        } catch (Exception ignored) {
+        }
+        return userRepository.save(new User(userInfo.getName(), userEmail, userInfo.getId()));
+    }
+
+    private String buildFacebookUserEmailUrl(long userId, String accessToken) {
+        Map<String, String> queryParams = new HashMap<>() {{
+            put(OAuth2ParametersKeys.ACCESS_TOKEN, accessToken);
+        }};
+        return oAuth2FacebookProperties.getUserEmailUrl() + userId + HttpUtils.buildQueryString(queryParams);
     }
 }
